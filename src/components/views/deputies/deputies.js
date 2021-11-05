@@ -3,11 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import StackedChart from '../../common/stackedChart/stackedChart';
+import VerticalBar from '../../common/verticalBar/verticalBar';
 
-import './dashboard.style.scss';
+import './deputies.style.scss';
 
-const Dashboard = props => {
+const Deputies = props => {
 
   return (
     <React.Fragment>
@@ -19,7 +19,7 @@ const Dashboard = props => {
         </Row>
         <Row>
           <Col lg="8">
-            <StackedChart />
+            <VerticalBar />
           </Col>
         </Row>
       </Container>
@@ -27,4 +27,4 @@ const Dashboard = props => {
   );
 };
 
-export default Dashboard;
+export default Deputies;

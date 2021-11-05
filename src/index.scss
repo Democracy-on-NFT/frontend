@@ -1,0 +1,63 @@
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+// colors variables
+@import './assets/styles/colors.scss';
+
+
+html,
+body,
+#root,
+.main {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font: normal normal 400 16px/20px 'Source Sans Pro', sans-serif;
+}
+
+.pro-sidebar {
+    min-width: 200px;
+    max-width: 270px;
+    width: auto;
+    .pro-sidebar-inner {
+      position: fixed;
+      min-width: 200px;
+    }
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $primary-2;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 46px;
+}
+
+h3 {
+  font-size: 32px;
+  line-height: 38px;
+}
+
+h4 {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+h5 {
+  font-size: 16px;
+  line-height: 20px;
+}
