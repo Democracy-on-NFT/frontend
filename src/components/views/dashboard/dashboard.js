@@ -10,7 +10,7 @@ import './dashboard.style.scss';
 const Dashboard = props => {
 
   return (
-    <React.Fragment>
+    <>
       <Container fluid>
         <Row>
           <Col>
@@ -23,7 +23,7 @@ const Dashboard = props => {
           </Col>
         </Row>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

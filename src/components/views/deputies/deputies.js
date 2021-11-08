@@ -10,7 +10,7 @@ import './deputies.style.scss';
 const Deputies = props => {
 
   return (
-    <React.Fragment>
+    <>
       <Container fluid>
         <Row>
           <Col>
@@ -23,7 +23,7 @@ const Deputies = props => {
           </Col>
         </Row>
       </Container>
-    </React.Fragment>
+    </>
   );
 };
 

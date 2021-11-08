@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { HashRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
+import React from 'react';
+import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 import { FaChartLine, FaUserTie } from 'react-icons/fa';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
@@ -8,10 +8,9 @@ import Deputies from './components/views/deputies/deputies';
 import Profiles from './components/views/profiles/profiles';
 
 let App = props => {
-  const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
   return (
     <div className="main">
-      <React.Fragment>
+      <>
         <HashRouter>
           <ProSidebar>
             <Menu iconShape="square">
@@ -19,18 +18,21 @@ let App = props => {
                 Dashboard
                 <Link to="/dashboard" />
               </MenuItem>
+
               <SubMenu title="Components" icon={<FaUserTie />}>
                 <MenuItem>
                   Deputies
                   <Link to="/deputies" />
-                  </MenuItem>
-                  <MenuItem>
+                </MenuItem>
+
+                <MenuItem>
                   Profiles
                   <Link to="/profiles" />
-                  </MenuItem>
+                </MenuItem>
               </SubMenu>
             </Menu>
           </ProSidebar>
+
           <Switch>
             <Route path="/dashboard">
               <Dashboard />
@@ -49,7 +51,7 @@ let App = props => {
             </Route>
           </Switch>
         </HashRouter>
-      </React.Fragment>
+      </>
 
     </div>
   );
