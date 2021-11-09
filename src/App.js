@@ -1,21 +1,59 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+import { FaChartLine, FaUserTie } from 'react-icons/fa';
+import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 import Dashboard from './components/views/dashboard/dashboard';
+import Deputies from './components/views/deputies/deputies';
+import Profiles from './components/views/profiles/profiles';
 
 let App = props => {
   return (
-    <React.Fragment>
-      <HashRouter>
-        <Switch>
-          <Route exact path="/dashboard" component={Dashboard} />
+    <div className="main">
+      <>
+        <HashRouter>
+          <ProSidebar>
+            <Menu iconShape="square">
+              <MenuItem icon={<FaChartLine />}>
+                Dashboard
+                <Link to="/dashboard" />
+              </MenuItem>
 
-          <Route path="*">
-            <Redirect to="/dashboard" />
-          </Route>
-        </Switch>
-      </HashRouter>
-    </React.Fragment>
+              <SubMenu title="Components" icon={<FaUserTie />}>
+                <MenuItem>
+                  Deputies
+                  <Link to="/deputies" />
+                </MenuItem>
+
+                <MenuItem>
+                  Profiles
+                  <Link to="/profiles" />
+                </MenuItem>
+              </SubMenu>
+            </Menu>
+          </ProSidebar>
+
+          <Switch>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+
+            <Route path="/deputies">
+              <Deputies />
+            </Route>
+
+            <Route path="/profiles">
+              <Profiles />
+            </Route>
+
+            <Route path="/">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </HashRouter>
+      </>
+
+    </div>
   );
 }
 
