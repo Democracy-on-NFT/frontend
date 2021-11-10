@@ -1,0 +1,22 @@
+@import './../../../assets/styles/colors.scss';
+
+.view-header {
+    margin-bottom: 20px;
+  
+    .react-select {
+      .react-select__control {
+        border-color: $secondary-1;
+        height: 32px !important;
+        width: 158px !important;
+      }
+    }
+  
+    .btn {
+      min-width: 193px;
+    }
+  
+    a {
+      color: $secondary-1;
+    }
+  }
+  
