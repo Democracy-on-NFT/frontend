@@ -1,10 +1,9 @@
-@import '~react-pro-sidebar/dist/scss/styles.scss';
+@import "~react-pro-sidebar/dist/scss/styles.scss";
 
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "bootstrap/dist/css/bootstrap.min.css";
 
 // colors variables
-@import './assets/styles/colors.scss';
-
+@import "./assets/styles/colors.scss";
 
 html,
 body,
@@ -14,17 +13,17 @@ body,
   margin: 0;
   padding: 0;
   width: 100%;
-  font: normal normal 400 16px/20px 'Source Sans Pro', sans-serif;
+  font: normal normal 400 16px/20px "Source Sans Pro", sans-serif;
 }
 
 .pro-sidebar {
+  min-width: 200px;
+  max-width: 270px;
+  width: auto;
+  .pro-sidebar-inner {
+    position: fixed;
     min-width: 200px;
-    max-width: 270px;
-    width: auto;
-    .pro-sidebar-inner {
-      position: fixed;
-      min-width: 200px;
-    }
+  }
 }
 
 /* Typography */

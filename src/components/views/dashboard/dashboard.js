@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import StackedChart from '../../common/stackedChart/stackedChart';
+import MapChart from '../../common/mapChart/mapChart';
 
 import './dashboard.style.scss';
 
@@ -20,6 +21,11 @@ const Dashboard = props => {
         <Row>
           <Col lg="8">
             <StackedChart />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="8">
+            <MapChart />
           </Col>
         </Row>
       </Container>
