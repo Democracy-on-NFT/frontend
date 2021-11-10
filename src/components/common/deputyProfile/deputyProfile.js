@@ -1,13 +1,38 @@
 import React from "react";
+import { Container } from "react-bootstrap";
+
+import './deputyProfile.style.scss';
 
 const DeputyProfile = props => {
-    const { name, party } = props;
+    const { data } = props;
+
     return (
-        <>
-            <h1 className>
-                {name} - {party}
+        <div key={data.id}>
+            <h1>
+                {data.name} - {data.currentParty}
             </h1>
-        </>
+
+            <div className="deputy-profile-info">
+                <p>
+                    {data.age}
+                </p>
+                <p>
+                    {data.county}
+                </p>
+                <p>
+                    {data.previousParty}
+                </p>
+                <p>
+                    {data.currentParty}
+                </p>
+                <p>
+                    {data.talks}
+                </p>
+                {data.proposals.map(proposal => (
+                    <p key={proposal}>{proposal}</p>
+                ))}
+            </div>
+        </div>
     )
 };
 

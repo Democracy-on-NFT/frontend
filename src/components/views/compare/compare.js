@@ -14,6 +14,9 @@ const Compare = () => {
 
     const [isWarningTypeChecked, setIsWarningTypeChecked] = useState(false);
     const [isNoticeTypeChecked, setIsNoticeTypeChecked] = useState(true);
+    const [leftDeputyInfo, setLeftDeputyInfo] = useState(null);
+    const [rightDeputyInfo, setRightDeputyInfo] = useState(null);
+
 
     const onCompareTypeChange = (type) => {
         if (type === 'deputies') {
@@ -25,22 +28,51 @@ const Compare = () => {
         }
     };
 
-    const options = [
-        { label: 'Option 1', value: 1 },
-        { label: 'Option 2', value: 2 },
-        { label: 'Option 3', value: 3 }
+    const data = [{
+        name: 'Florin Citu',
+        id: 1,
+        age: 40,
+        previousParty: 'PNL',
+        currentParty: 'PNL ',
+        talks: 10,
+        county: 'Ilfov',
+        proposals: ['asdasd', 'qqqw1', 'asd123', 'afffff']
+    },
+    {
+        name: 'Marcel Ciolacu',
+        id: 2,
+        age: 52,
+        previousParty: '-',
+        currentParty: 'PSD',
+        talks: 30,
+        county: 'Tulcea',
+        proposals: ['aaaaa', 'bbbbb', 'ccccc', 'ddddd']
+    }
     ];
 
-    const optionsChangeHandler = (
-        option => {
-            if (option) {
-                alert(`Option "${option.label}" (${option.value}) was selected.`);
+    data.map(deputy => {
+        deputy.label = deputy.name;
+        deputy.value = deputy.id;
+    });
+
+    const onChangeHandler = (option, position) => {
+        if (option) {
+            switch (position) {
+                case 'left':
+                    setLeftDeputyInfo(option);
+                    break;
+                case 'right':
+                    setRightDeputyInfo(option);
+                    break;
+                default:
+                    break;
             }
-        });
+        }
+    };
 
     return (
         <>
-            <Container fluid>
+            <Container fluid className="compare-container">
                 <ViewHeader>
                     <Row>
                         <Col sm={6}>
@@ -72,33 +104,78 @@ const Compare = () => {
                 </Row>
                 <Row>
                     <div className="compare-panel">
-                        <div className="left-compare-panel">
+                        <div className="deputy-panel">
                             <Row>
-                                <Col sm={6} className="d-flex justify-content-end">
+                                <Col className="d-flex justify-content-center">
                                     <Select
-                                        options={options}
+                                        options={data}
                                         className="react-select"
                                         classNamePrefix="react-select"
-                                        onChange={optionsChangeHandler}
+                                        onChange={(option) => onChangeHandler(option, 'left')}
                                     />
                                 </Col>
                             </Row>
-                            <DeputyProfile name="Bobita" party="PNL" />
                         </div>
-                        <div className="right-compare-panel">
+
+                        <div className="data-panel">
                             <Row>
-                                <Col sm={6} className="d-flex justify-content-end">
+                                <Col className="d-flex justify-content-center">
+                                    <h1>Informations</h1>
+                                </Col>
+                            </Row>
+
+                        </div>
+                        <div className="deputy-panel">
+                            <Row>
+                                <Col className="d-flex justify-content-center">
                                     <Select
-                                        options={options}
+                                        options={data}
                                         className="react-select"
                                         classNamePrefix="react-select"
-                                        onChange={optionsChangeHandler}
+                                        onChange={(option) => onChangeHandler(option, 'right')}
                                     />
                                 </Col>
                             </Row>
-                            <DeputyProfile name="Geani" party="PSD" />
+
                         </div>
                     </div>
+                </Row>
+                <Row className="deputies-compare-panel">
+                    <Container fluid>
+                        {leftDeputyInfo ? (
+                            <DeputyProfile className="deputy-profile" key={leftDeputyInfo.id.toString()} data={leftDeputyInfo} />
+                        ) : null}
+                    </Container>
+
+                    <div className="compare-informations-label">
+                        <p>
+                            Name
+                        </p>
+                        <p>
+                            Age
+                        </p>
+                        <p>
+                            County
+                        </p>
+                        <p>
+                            Previous Party
+                        </p>
+                        <p>
+                            Current Party
+                        </p>
+                        <p>
+                            Talks
+                        </p>
+                        <p>
+                            Proposals
+                        </p>
+                    </div>
+
+                    <Container fluid>
+                        {rightDeputyInfo ? (
+                            <DeputyProfile key={rightDeputyInfo.id} data={rightDeputyInfo} />
+                        ) : null}
+                    </Container>
                 </Row>
             </Container>
         </>
