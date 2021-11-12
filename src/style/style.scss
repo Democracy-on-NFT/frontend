@@ -1,10 +1,14 @@
-@import "~react-pro-sidebar/dist/scss/styles.scss";
+// libraries
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+@import 'semantic-ui-css/semantic.min.css';
 
-@import "bootstrap/dist/css/bootstrap.min.css";
+// custom code
+@import './components//variables.scss';
+@import './components//sidebar.scss';
+@import './components//profiles.scss';
 
-// colors variables
-@import "./assets/styles/colors.scss";
 
+// global
 html,
 body,
 #root,
@@ -16,15 +20,6 @@ body,
   font: normal normal 400 16px/20px "Source Sans Pro", sans-serif;
 }
 
-.pro-sidebar {
-  min-width: 200px;
-  max-width: 270px;
-  width: auto;
-  .pro-sidebar-inner {
-    position: fixed;
-    min-width: 200px;
-  }
-}
 
 /* Typography */
 h1,
