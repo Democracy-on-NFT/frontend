@@ -4,7 +4,7 @@ import { Container } from 'semantic-ui-react'
 import StackedChart from '../../common/stackedChart/stackedChart';
 import MapChart from '../../common/mapChart/mapChart';
 
-import './dashboard.style.scss';
+import '../../../style/components/dashboard.scss';
 
 const Dashboard = props => {
 

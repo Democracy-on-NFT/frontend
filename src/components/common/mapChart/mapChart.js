@@ -29,6 +29,8 @@ const MapChart = () => {
         let id;
         if(data.target.id && data.target.id.includes('iso_'))
             id = data.target.id.replace('iso_', '');
+        else if (!data.target.id && data.target.nodeName == 'tspan')
+            id = data.target.parentElement.id.replace('iso_', '');
         else 
             id = data.target.id;
 
@@ -42,7 +44,7 @@ const MapChart = () => {
 
     return (
         <>
-            <div onClick={onHandleClick}>
+            <div onClick={onHandleClick} className="map-container">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 500" xmlSpace="preserve">
                     <g>
                         <path onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="land" id="ro_1" fill="#FAFDFF" stroke="#BCC5CC" d="M208.667,209c5.5,2.667-0.015,10.66,6.667,13.667c10,4.5-6.833,6,1.667,10.167c5.759,2.823,7.333,8.333,10.333,4.5s7-2.5,6.167,2.667s6.428,5.164,6.667,14.166C241,285.5,251.667,276.5,261,294.999c0.667-1,4.5-4.333,2.833-8.166c-1.667-3.834,3-8.5,0.041-13.834c-2.959-5.333,1.699-5.371,0.625-9.666c-2-7.999,9.667-2.999,8.667-12c-0.74-6.659,7.833-3.166,8.333-12.167c0.314-5.661,9.333-1.167,11.333-8.5s9.667-0.5,11.333-16.333c0.578-5.492-22.317-8.513-13.333-19.333c6-7.227,0.667-6-5.001-3.5c-10,7.217-15.126-0.84-18.5,3.333c-6.333,7.833-10,1.833-6.667-0.833s-3.624-4.698-5.667-3.5c-4.833,2.833-7.667-5.5-17.667-3.333c-4.997,1.083-4.5-4.333-13,0.333c-11.238,6.17-8.5-10.833-15.833-9.667s-7.849,1.374-8.167-2.833c-24.499,12.667-0.167,17-9.166,27.833c2.521,1.946,3.124,2.517,4.167,3.5C201.167,211.833,203.167,206.333,208.667,209z" cursor="pointer"></path>
