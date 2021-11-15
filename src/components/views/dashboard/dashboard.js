@@ -2,8 +2,9 @@ import React from 'react';
 
 import { Container } from 'semantic-ui-react'
 import StackedChart from '../../common/stackedChart/stackedChart';
+import MapChart from '../../common/mapChart/mapChart';
 
-import './dashboard.style.scss';
+import '../../../style/components/dashboard.scss';
 
 const Dashboard = props => {
 
@@ -11,7 +12,8 @@ const Dashboard = props => {
     <>
       <Container fluid>
         <h1>Last 30 days activity</h1>
-        <StackedChart />
+        {/* <StackedChart /> */}
+        <MapChart />
       </Container>
     </>
   );
