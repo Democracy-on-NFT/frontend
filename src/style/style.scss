@@ -20,6 +20,14 @@ body,
   font: normal normal 400 16px/20px 'Source Sans Pro', sans-serif;
 }
 
+.main {
+  display: flex;
+  flex-direction: row;
+
+  .pro-sidebar-inner {
+    position: fixed;
+  }
+}
 
 
 /* Typography */

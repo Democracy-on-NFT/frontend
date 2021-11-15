@@ -3,8 +3,6 @@ import { Container } from 'semantic-ui-react'
 
 import VerticalBar from '../../common/verticalBar/verticalBar';
 
-import './deputies.style.scss';
-
 const Deputies = props => {
 
   return (
