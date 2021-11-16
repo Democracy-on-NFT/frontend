@@ -58,7 +58,7 @@ const UserCards = () => {
 
     const onChangePartyHandler = (e) => {
         const party = dummyParties.filter(party => {
-            return party.text === e.target.innerHTML;
+            return party.text === e.target.textContent;
         })
 
         setPartyFilter(party[0]);
@@ -66,7 +66,7 @@ const UserCards = () => {
 
     const onChangeDeputyHandler = (e) => {
         const deputy = dummyDeputies.filter(deputy => {
-            return deputy.text === e.target.innerHTML;
+            return deputy.text === e.target.textContent;
         })
 
         setDeputyFilter(deputy[0]);
@@ -86,7 +86,7 @@ const UserCards = () => {
                             options={dummyParties}
                             placeholder="Select party"
                             onChange={e => onChangePartyHandler(e)}
-                        // value={partyFilter.value}
+                            // value={partyFilter.value}
                         />
                     </div>
 
@@ -101,8 +101,8 @@ const UserCards = () => {
                 </div>
 
                 <div className="ui equal grid">
-                    {usersState.data ? usersState.data.map(data => (
-                        <div className="four wide column" key={data.id.text}>
+                    {usersState.data ? usersState.data.map((data, index) => (
+                        <div className="four wide column" key={index}>
                             <div className="card">
                                 <div className="card-body">
                                     <div className="avatar">
