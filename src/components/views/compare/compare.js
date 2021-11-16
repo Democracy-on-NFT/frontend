@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import Select from 'react-select';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Select } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 
-import './compare.style.scss';
+import '../../../style/components/customCheckbox.scss';
 
 const Compare = () => {
 
@@ -74,109 +72,86 @@ const Compare = () => {
         <>
             <Container fluid className="compare-container">
                 <ViewHeader>
-                    <Row>
-                        <Col sm={6}>
-                            <h1>Compare contributions</h1>
-                        </Col>
-                    </Row>
+                    <h1>Compare contributions</h1>
                 </ViewHeader>
 
-                <Row>
-                    <div className="compare-types">
-                        <CustomCheckbox
-                            isChecked={isNoticeTypeChecked}
-                            label={'deputies'}
-                            size={1}
-                            onChangeState={() => {
-                                onCompareTypeChange('deputies');
-                            }}
+                <div className="compare-types">
+                    <CustomCheckbox
+                        isChecked={isNoticeTypeChecked}
+                        label={'deputies'}
+                        size={1}
+                        onChangeState={() => {
+                            onCompareTypeChange('deputies');
+                        }}
+                    />
+
+                    <CustomCheckbox
+                        isChecked={isWarningTypeChecked}
+                        label={'political party'}
+                        size={1}
+                        onChangeState={() => {
+                            onCompareTypeChange('political party');
+                        }}
+                    />
+                </div>
+                <div className="compare-panel">
+                    <div className="deputy-panel">
+                        <Select
+                            options={data}
+                            className="react-select"
+                            classNamePrefix="react-select"
+                            onChange={(option) => onChangeHandler(option, 'left')}
                         />
+                    </div>
 
-                        <CustomCheckbox
-                            isChecked={isWarningTypeChecked}
-                            label={'political party'}
-                            size={1}
-                            onChangeState={() => {
-                                onCompareTypeChange('political party');
-                            }}
+                    <div className="data-panel">
+                        <h1>Informations</h1>
+
+                    </div>
+                    <div className="deputy-panel">
+                        <Select
+                            options={data}
+                            className="react-select"
+                            classNamePrefix="react-select"
+                            onChange={(option) => onChangeHandler(option, 'right')}
                         />
                     </div>
-                </Row>
-                <Row>
-                    <div className="compare-panel">
-                        <div className="deputy-panel">
-                            <Row>
-                                <Col className="d-flex justify-content-center">
-                                    <Select
-                                        options={data}
-                                        className="react-select"
-                                        classNamePrefix="react-select"
-                                        onChange={(option) => onChangeHandler(option, 'left')}
-                                    />
-                                </Col>
-                            </Row>
-                        </div>
+                </div>
+                <Container fluid>
+                    {leftDeputyInfo ? (
+                        <DeputyProfile className="deputy-profile" key={leftDeputyInfo.id.toString()} data={leftDeputyInfo} />
+                    ) : null}
+                </Container>
 
-                        <div className="data-panel">
-                            <Row>
-                                <Col className="d-flex justify-content-center">
-                                    <h1>Informations</h1>
-                                </Col>
-                            </Row>
+                <div className="compare-informations-label">
+                    <p>
+                        Name
+                    </p>
+                    <p>
+                        Age
+                    </p>
+                    <p>
+                        County
+                    </p>
+                    <p>
+                        Previous Party
+                    </p>
+                    <p>
+                        Current Party
+                    </p>
+                    <p>
+                        Talks
+                    </p>
+                    <p>
+                        Proposals
+                    </p>
+                </div>
 
-                        </div>
-                        <div className="deputy-panel">
-                            <Row>
-                                <Col className="d-flex justify-content-center">
-                                    <Select
-                                        options={data}
-                                        className="react-select"
-                                        classNamePrefix="react-select"
-                                        onChange={(option) => onChangeHandler(option, 'right')}
-                                    />
-                                </Col>
-                            </Row>
-
-                        </div>
-                    </div>
-                </Row>
-                <Row className="deputies-compare-panel">
-                    <Container fluid>
-                        {leftDeputyInfo ? (
-                            <DeputyProfile className="deputy-profile" key={leftDeputyInfo.id.toString()} data={leftDeputyInfo} />
-                        ) : null}
-                    </Container>
-
-                    <div className="compare-informations-label">
-                        <p>
-                            Name
-                        </p>
-                        <p>
-                            Age
-                        </p>
-                        <p>
-                            County
-                        </p>
-                        <p>
-                            Previous Party
-                        </p>
-                        <p>
-                            Current Party
-                        </p>
-                        <p>
-                            Talks
-                        </p>
-                        <p>
-                            Proposals
-                        </p>
-                    </div>
-
-                    <Container fluid>
-                        {rightDeputyInfo ? (
-                            <DeputyProfile key={rightDeputyInfo.id} data={rightDeputyInfo} />
-                        ) : null}
-                    </Container>
-                </Row>
+                <Container fluid>
+                    {rightDeputyInfo ? (
+                        <DeputyProfile key={rightDeputyInfo.id} data={rightDeputyInfo} />
+                    ) : null}
+                </Container>
             </Container>
         </>
     )

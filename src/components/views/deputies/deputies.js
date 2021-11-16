@@ -1,27 +1,15 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container } from 'semantic-ui-react'
 
 import VerticalBar from '../../common/verticalBar/verticalBar';
-
-import './deputies.style.scss';
 
 const Deputies = props => {
 
   return (
     <>
       <Container fluid>
-        <Row>
-          <Col>
-            <h1>Last 30 days activity</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="8">
-            <VerticalBar />
-          </Col>
-        </Row>
+        <h1>Last 30 days activity</h1>
+        <VerticalBar />
       </Container>
     </>
   );

@@ -1,7 +1,4 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-
-import './deputyProfile.style.scss';
 
 const DeputyProfile = props => {
     const { data } = props;
