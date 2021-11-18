@@ -3,8 +3,6 @@ import { Select } from "semantic-ui-react";
 
 import * as profileApi from '../../../api/profile.api';
 
-import '../../../style/components/profiles.scss';
-
 const UserCards = () => {
 
     const [usersState, setUserState] = useState({

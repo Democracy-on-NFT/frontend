@@ -1,11 +1,15 @@
 // libraries
 @import '~react-pro-sidebar/dist/scss/styles.scss';
 @import 'semantic-ui-css/semantic.min.css';
+@import 'react-loading-skeleton/dist/skeleton.css';
 
 // custom code
-@import './components//variables.scss';
-@import './components//sidebar.scss';
-@import './components//profiles.scss';
+@import './components/variables.scss';
+@import './components/sidebar.scss';
+@import './components/profiles.scss';
+@import './components/compare.scss';
+@import './components/customCheckbox.scss';
+@import './components/dashboard.scss';
 
 
 // global
