@@ -1,84 +1,89 @@
 .compare-container {
-    max-width: 1250px !important;
-    padding: 20px;
-  
-    .compare-types {
-      margin-bottom: 35px;
-      text-transform: capitalize;
-      font-size: 13px;
-      display: flex;
-  
-      span {
-        margin-right: 27px;
-  
-        svg {
-          margin-right: 11px;
-        }
-      }
-    }
-  
-    .select-to-compare-panel,
-    .deputies-compare-panel {
-      padding: 10px;
-    }
-  
-    .select-to-compare-panel {
-      display: flex;
-      border-bottom: 1px solid;
-      text-align: center;
+  max-width: 1250px !important;
+  padding: 20px;
 
-      .deputy-panel,
-      .party-panel {
-        width: 33%;
-      }
-  
-      .data-panel {
-        width: 33%;
-      }
-    }
-  
-    .compare-panel {
-      text-align: center;
-      display: flex;
-      flex-direction: row;
+  .compare-types {
+    margin-bottom: 35px;
+    text-transform: capitalize;
+    font-size: 13px;
+    display: flex;
 
-      .fluid.container {
-          width: 33%;
-      }
-  
-      .compare-informations-label {
-        width: 33%;
+    span {
+      margin-right: 27px;
 
-        h1 {
-            margin-bottom: 10px;
-        }
-  
-        p {
-          position: relative;
-        }
-  
-        p:before {
-          content: "";
-          display: block;
-          width: 30px;
-          height: 2px;
-          background: #191970;
-          left: 0;
-          top: 50%;
-          position: absolute;
-        }
-        
-        p:after {
-          content: "";
-          display: block;
-          width: 30px;
-          height: 2px;
-          background: #191970;
-          right: 0;
-          top: 50%;
-          position: absolute;
-        }
+      svg {
+        margin-right: 11px;
       }
     }
   }
-  
+
+  .select-to-compare-panel,
+  .deputies-compare-panel {
+    padding: 10px;
+  }
+
+  .select-to-compare-panel {
+    display: flex;
+    border-bottom: 1px solid;
+    text-align: center;
+
+    .deputy-panel,
+    .party-panel {
+      width: 33%;
+    }
+
+    .data-panel {
+      width: 33%;
+    }
+  }
+
+  .compare-panel {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+
+    .fluid.container {
+      width: 33%;
+
+      .react-loading-skeleton {
+        width: 80%;
+        margin-top: 5px;
+        margin-bottom: 13px;
+      }
+    }
+
+    .compare-informations-label {
+      width: 33%;
+
+      h1 {
+        margin-bottom: 10px;
+      }
+
+      p {
+        position: relative;
+      }
+
+      p:before {
+        content: "";
+        display: block;
+        width: 30px;
+        height: 2px;
+        background: #191970;
+        left: 0;
+        top: 50%;
+        position: absolute;
+      }
+
+      p:after {
+        content: "";
+        display: block;
+        width: 30px;
+        height: 2px;
+        background: #191970;
+        right: 0;
+        top: 50%;
+        position: absolute;
+      }
+    }
+  }
+}

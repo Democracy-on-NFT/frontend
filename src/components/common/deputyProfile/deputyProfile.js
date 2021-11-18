@@ -22,12 +22,6 @@ const DeputyProfile = props => {
                 <p>
                     {data.currentParty}
                 </p>
-                <p>
-                    {data.talks}
-                </p>
-                {data.proposals.map(proposal => (
-                    <p key={proposal}>{proposal}</p>
-                ))}
             </div>
         </div>
     )

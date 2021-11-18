@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
+import Skeleton from 'react-loading-skeleton'
 
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
@@ -8,6 +9,9 @@ import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 import PartyProfile from "../../common/partyProfile/partyProfile";
 
 import '../../../style/components/compare.scss';
+
+import 'react-loading-skeleton/dist/skeleton.css'
+import StackedChart from "../../common/stackedChart/stackedChart";
 
 const Compare = () => {
 
@@ -127,13 +131,13 @@ const Compare = () => {
         <>
             <Container fluid className="compare-container">
                 <ViewHeader>
-                    <h1>Compare contributions</h1>
+                    <h1>Compara contribuțiile aduse</h1>
                 </ViewHeader>
 
                 <div className="compare-types">
                     <CustomCheckbox
                         isChecked={isDeputyTypeChecked}
-                        label={'deputies'}
+                        label={'deputați'}
                         size={1}
                         onChangeState={() => {
                             onCompareTypeChange('deputies');
@@ -142,7 +146,7 @@ const Compare = () => {
 
                     <CustomCheckbox
                         isChecked={isPartyTypeChecked}
-                        label={'political party'}
+                        label={'partid politic'}
                         size={1}
                         onChangeState={() => {
                             onCompareTypeChange('political party');
@@ -155,18 +159,18 @@ const Compare = () => {
                             <div className="deputy-panel">
                                 <Select
                                     options={dummyDeputies}
-                                    placeholder="Select deputy"
+                                    placeholder="Alege deputat"
                                     onChange={(option) => onChangeDeputyHandler(option, 'left')} />
                             </div>
 
                             <div className="data-panel">
-                                <h1>Informations</h1>
+                                <h1>Informații</h1>
 
                             </div>
                             <div className="deputy-panel">
                                 <Select
                                     options={dummyDeputies}
-                                    placeholder="Select deputy"
+                                    placeholder="Alege deputat"
                                     onChange={(option) => onChangeDeputyHandler(option, 'right')} />
                             </div>
                         </div>
@@ -175,42 +179,42 @@ const Compare = () => {
                             <Container fluid>
                                 {leftDeputyInfo ? (
                                     <DeputyProfile key={leftDeputyInfo.id.toString()} data={leftDeputyInfo} />
-                                ) : null}
+                                ) : <>
+                                    <Skeleton height="25px" />
+                                    <Skeleton count="4" height="20px" />
+                                </>}
                             </Container>
 
                             <Container fluid className="compare-informations-label">
                                 <h1>
                                     <p>
-                                        Name
+                                        Nume
                                     </p>
                                 </h1>
                                 <div>
                                     <p>
-                                        Age
+                                        Vârsta
                                     </p>
                                     <p>
-                                        County
+                                        Județ
                                     </p>
                                     <p>
-                                        Previous Party
+                                        Partid precedent
                                     </p>
                                     <p>
-                                        Current Party
+                                        Partid curent
                                     </p>
-                                    <p>
-                                        Talks
-                                    </p>
-                                    <p>
-                                        Proposals
-                                    </p>
-                                    
+
                                 </div>
                             </Container>
 
                             <Container fluid>
                                 {rightDeputyInfo ? (
                                     <DeputyProfile key={rightDeputyInfo.id.toString()} data={rightDeputyInfo} />
-                                ) : null}
+                                ) : <>
+                                    <Skeleton height="25px" />
+                                    <Skeleton count="4" height="20px" />
+                                </>}
                             </Container>
                         </div>
                     </>
@@ -220,19 +224,19 @@ const Compare = () => {
                             <div className="party-panel">
                                 <Select
                                     options={dummyParties}
-                                    placeholder="Select party"
+                                    placeholder="Alege partid"
                                     onChange={(option) => onChangePartyHandler(option, 'left')}
                                 />
                             </div>
 
                             <div className="data-panel">
-                                <h1>Informations</h1>
+                                <h1>Informații</h1>
 
                             </div>
                             <div className="party-panel">
                                 <Select
                                     options={dummyParties}
-                                    placeholder="Select party"
+                                    placeholder="Alege partid"
                                     onChange={(option) => onChangePartyHandler(option, 'right')}
                                 />
                             </div>
@@ -242,43 +246,52 @@ const Compare = () => {
                             <Container fluid>
                                 {leftPartyInfo ? (
                                     <PartyProfile className="party-profile" key={leftPartyInfo.id.toString()} data={leftPartyInfo} />
-                                ) : null}
+                                ) : <>
+                                    <Skeleton height="25px" />
+                                    <Skeleton count="6" height="20px" />
+                                </>}
                             </Container>
 
                             <Container fluid className="compare-informations-label">
                                 <h1>
                                     <p>
-                                        Name
+                                        Numele
                                     </p>
                                 </h1>
                                 <p>
-                                    Abbreviation
+                                    Prescurtarea
                                 </p>
                                 <p>
-                                    Total members
+                                    Nr. membri
                                 </p>
                                 <p>
-                                    Previous Party
+                                    Președinte
                                 </p>
                                 <p>
-                                    President
+                                    Vice președinte
                                 </p>
                                 <p>
-                                    Secretary General
+                                    Secretar general
                                 </p>
                                 <p>
-                                    Ministers
+                                    Miniștri
                                 </p>
                             </Container>
 
                             <Container fluid>
                                 {rightPartyInfo ? (
                                     <PartyProfile key={rightPartyInfo.id.toString()} data={rightPartyInfo} />
-                                ) : null}
+                                ) : <>
+                                    <Skeleton height="25px" />
+                                    <Skeleton count="6" height="20px" />
+                                </>}
                             </Container>
                         </div>
                     </>
                 )}
+
+                <StackedChart left={[1, 2, 3]} right={[3, 2, 1]} />
+
             </Container>
         </>
     )
