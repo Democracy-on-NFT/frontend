@@ -1,4 +1,15 @@
-.map-container {
+.dashboard-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
+  width: 100%;
+
+  .map-container {
+   
+    margin: 0 auto;
+  }
+
+  #world-map-text {
+    position: absolute;
+    display: none;
+  }
 }

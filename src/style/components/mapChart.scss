@@ -1,0 +1,16 @@
+@import './variables.scss';
+
+.map-container {
+  #info-rect {
+    fill: #BCC5CC;
+    stroke: #BCC5CC;
+    stroke-width: 1;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+    display: none;
+  }
+
+  #info-text {
+      font-size: 12px;
+  }
+}
