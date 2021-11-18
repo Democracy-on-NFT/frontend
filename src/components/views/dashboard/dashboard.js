@@ -1,10 +1,8 @@
 import React from 'react';
 import { Grid, Menu, Select } from 'semantic-ui-react';
 
-import { Container } from 'semantic-ui-react'
 import MapChart from '../../common/mapChart/mapChart';
 
-import '../../../style/components/dashboard.scss';
 import worldMap from '../../../assets/world-map.jpg';
 
 const Dashboard = props => {
