@@ -1,3 +1,5 @@
+import '../../../style/components/mapChart.scss';
+
 const MapChart = () => {
     const highlightCountyColor = '#C0E6FF';
     const defaultColor = '#FAFDFF';
@@ -14,30 +16,51 @@ const MapChart = () => {
             id = data.target.id.replace('iso_', '');
         else if (!data.target.id && data.target.nodeName == 'tspan')
             id = data.target.parentElement.id.replace('iso_', '');
-        else 
+        else
             id = data.target.id;
 
-        if(!id)
+        if (!id)
             return;
 
         const element = document.getElementById(id);
+        const rect = document.getElementById('info-rect');
+        const text = document.getElementById('info-text');
+
+        text.textContent = `Deputati: ${document.getElementById(`iso_${id}`).textContent}`;
+
+        rect.style.display="block";
+        text.style.display="block";
+
+        const position = element.getBoundingClientRect();
+        const  x = position.left/2, y = position.top/2;
+
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y);
+        text.setAttribute('x', x + 10);
+        text.setAttribute('y', y + 20);
 
         element.style.fill = highlightCountyColor;
     }
 
     const handleMouseLeave = (data) => {
         let id;
-        if(data.target.id && data.target.id.includes('iso_'))
+        if (data.target.id && data.target.id.includes('iso_'))
             id = data.target.id.replace('iso_', '');
         else if (!data.target.id && data.target.nodeName == 'tspan')
             id = data.target.parentElement.id.replace('iso_', '');
-        else 
+        else
             id = data.target.id;
 
-        if(!id)
+        if (!id)
             return;
-        
+
         const element = document.getElementById(id);
+
+        const rect = document.getElementById('info-rect');
+        const text = document.getElementById('info-text');
+
+        rect.style.display="none";
+        text.style.display="none";
 
         element.style.fill = defaultColor;
     }
@@ -136,6 +159,10 @@ const MapChart = () => {
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_42" transform="matrix(1 0 0 1 477 265)" fontSize="13" cursor="pointer">Vrancea</text>
                     </g>
 
+                    <g>
+                        <rect id="info-rect" rx="10" ry="10" width="120" height="50" />
+                        <text id="info-text" />
+                    </g>
                 </svg>
             </div>
         </>
