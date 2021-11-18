@@ -2,8 +2,6 @@ import React from 'react';
 import Icon from '@mdi/react';
 import { mdiCheckboxIntermediate, mdiCheckboxBlankOutline } from '@mdi/js';
 
-import '../../../style/components/customCheckbox.scss';
-
 const CustomCheckbox = props => {
   const { isChecked, label, size, onChangeState } = props;
 

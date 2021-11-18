@@ -7,10 +7,6 @@ import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 import PartyProfile from "../../common/partyProfile/partyProfile";
-
-import '../../../style/components/compare.scss';
-
-import 'react-loading-skeleton/dist/skeleton.css'
 import StackedChart from "../../common/stackedChart/stackedChart";
 
 const Compare = () => {
