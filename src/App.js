@@ -6,6 +6,7 @@ import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Dashboard from './components/views/dashboard/dashboard';
 import Deputies from './components/views/deputies/deputies';
 import Profiles from './components/views/profiles/profiles';
+import Compare from './components/views/compare/compare';
 
 let App = props => {
   return (
@@ -29,6 +30,11 @@ let App = props => {
                   Profiles
                   <Link to="/profiles" />
                 </MenuItem>
+
+                <MenuItem>
+                  Compare
+                  <Link to="/compare" />
+                </MenuItem>
               </SubMenu>
             </Menu>
           </ProSidebar>
@@ -44,6 +50,10 @@ let App = props => {
 
             <Route path="/profiles">
               <Profiles />
+            </Route>
+
+            <Route path="/compare">
+              <Compare />
             </Route>
 
             <Route path="/">
