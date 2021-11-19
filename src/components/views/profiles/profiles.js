@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Select } from "semantic-ui-react";
+import { Select, Header, Image, Modal } from "semantic-ui-react";
+import Icon from '@mdi/react';
+import { mdiMapMarkerRadius, mdiEmail } from '@mdi/js';
 
 import * as profileApi from '../../../api/profile.api';
 
@@ -13,7 +15,27 @@ const UserCards = () => {
     });
 
     const [partyFilter, setPartyFilter] = useState({});
-    const [deputyFilter, setDeputyFilter] = useState({});
+    const [countyFilter, setCountyFilter] = useState({});
+    const [openModal, setOpenModal] = useState(false);
+    const [modalData, setModalData] = useState({
+        name: {
+            first: '',
+            last: ''
+        },
+        email: '',
+        dob: {
+            date: '',
+            age: ''
+        },
+        nat: '',
+        picture: {
+            large: ''
+        },
+        location: {
+            city: '',
+            state: ''
+        }
+    });
 
     const uppercase = word => {
         return word.charAt(0).toUpperCase() + word.slice(1);
@@ -43,13 +65,13 @@ const UserCards = () => {
         key: 'psd'
     }];
 
-    const dummyDeputies = [{
-        text: 'Ion Popescu',
+    const dummyCounties = [{
+        text: 'Suceava',
         value: 1,
         key: 1
     },
     {
-        text: 'Dorel Andrei',
+        text: 'Botosani',
         value: 2,
         key: 2
     }];
@@ -62,12 +84,19 @@ const UserCards = () => {
         setPartyFilter(party[0]);
     }
 
-    const onChangeDeputyHandler = (e) => {
-        const deputy = dummyDeputies.filter(deputy => {
-            return deputy.text === e.target.textContent;
+    const onChangecountyHandler = (e) => {
+        const county = dummyCounties.filter(county => {
+            return county.text === e.target.textContent;
         })
 
-        setDeputyFilter(deputy[0]);
+        setCountyFilter(county[0]);
+    }
+
+    const handleOnCardClick = (e) => {
+        const card = e.target.closest('.card');
+
+        setModalData(usersState.data[card.getAttribute('data-key')]);
+        setOpenModal(true);
     }
 
     useEffect(() => {
@@ -76,32 +105,32 @@ const UserCards = () => {
 
     return (
         <>
-            <div className="container">
+            <div className="profiles-container">
                 <p>Filter</p>
                 <div className="ui equal grid">
                     <div>
                         <Select
                             options={dummyParties}
                             placeholder="Select party"
-                            onChange={e => onChangePartyHandler(e)}
-                            // value={partyFilter.value}
+                            onChange={onChangePartyHandler}
+                        // value={partyFilter.value}
                         />
                     </div>
 
                     <div>
                         <Select
-                            options={dummyDeputies}
-                            placeholder="Select deputy"
-                            onChange={onChangeDeputyHandler}
-                        // value={deputyFilter}
+                            options={dummyCounties}
+                            placeholder="Select county"
+                            onChange={onChangecountyHandler}
+                        // value={countyFilter}
                         />
                     </div>
                 </div>
 
                 <div className="ui equal grid">
                     {usersState.data ? usersState.data.map((data, index) => (
-                        <div className="four wide column" key={index}>
-                            <div className="card">
+                        <div className="four wide column">
+                            <div className="card" key={index.toString()} data-key={index.toString()} onClick={handleOnCardClick}>
                                 <div className="card-body">
                                     <div className="avatar">
                                         <img
@@ -137,6 +166,32 @@ const UserCards = () => {
             >
                 Load More Users
             </button> */}
+                <Modal
+                    closeIcon
+                    onClose={() => setOpenModal(false)}
+                    onOpen={() => setOpenModal(true)}
+                    open={openModal}
+                >
+                    <Modal.Header>Parlamentar</Modal.Header>
+                    <Modal.Content image>
+                        <Image size='medium' src={modalData.picture.large} wrapped />
+                        <Modal.Description>
+                            <Header>{modalData.name.first} {modalData.name.last} </Header>
+                            <p>
+                            <Icon path={mdiEmail}
+                                    size={1} />
+                                {modalData.email}
+                            </p>
+                            <p>{modalData.nat}</p>
+                            <p>{modalData.dob.age}</p>
+                            <p>
+                                <Icon path={mdiMapMarkerRadius}
+                                    size={1} />
+                                {modalData.location.city}, {modalData.location.state}
+                            </p>
+                        </Modal.Description>
+                    </Modal.Content>
+                </Modal>
             </div>
         </>
     );
