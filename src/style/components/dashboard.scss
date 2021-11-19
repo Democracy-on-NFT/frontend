@@ -1,12 +1,8 @@
 .dashboard-container {
   max-width: 1200px;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 20px;
   width: 100%;
-
-  .map-container {
-   
-    margin: 0 auto;
-  }
 
   #world-map-text {
     position: absolute;
