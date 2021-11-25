@@ -7,6 +7,7 @@ import Dashboard from './components/views/dashboard/dashboard';
 import Deputies from './components/views/deputies/deputies';
 import Profiles from './components/views/profiles/profiles';
 import Compare from './components/views/compare/compare';
+import County from './components/views/county/county';
 
 let App = props => {
   return (
@@ -18,6 +19,11 @@ let App = props => {
               <MenuItem icon={<FaChartLine />}>
                 Dashboard
                 <Link to="/dashboard" />
+              </MenuItem>
+
+              <MenuItem icon={<FaChartLine />}>
+                Județ
+                <Link to="/judet" />
               </MenuItem>
 
               <SubMenu title="Components" icon={<FaUserTie />}>
@@ -54,6 +60,10 @@ let App = props => {
 
             <Route path="/compare">
               <Compare />
+            </Route>
+
+            <Route path="/judet/:id">
+              <County />
             </Route>
 
             <Route path="/">

@@ -286,7 +286,7 @@ const Compare = () => {
                     </>
                 )}
 
-                <StackedChart left={[1, 2, 3]} right={[3, 2, 1]} />
+                <StackedChart left={[1, 2, 1]} right={[3, 2, 1]} />
 
             </Container>
         </>
