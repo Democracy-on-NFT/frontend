@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+import { HashRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 import { FaMapMarkerAlt, FaUserTie, FaBalanceScale, FaUserFriends } from 'react-icons/fa';
 import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
 
@@ -26,23 +26,23 @@ let App = props => {
               <Menu iconShape="square" popperArrow="true" >
                 <MenuItem active icon={<FaMapMarkerAlt />}>
                   Hartă interactivă
-                  <Link to="/dashboard" />
+                  <Link to="/harta" />
                 </MenuItem>
 
                 <SubMenu title="Parlamentari" icon={<FaUserTie />}>
                   <MenuItem icon={<FaUserFriends />}>
                     Deputați
-                    <Link to="/deputies" />
+                    <Link to="/deputati" />
                   </MenuItem>
 
                   <MenuItem icon={<FaUserFriends />}>
                     Senatori
-                    <Link to="/profiles" />
+                    <Link to="/senatori" />
                   </MenuItem>
 
                   <MenuItem icon={<FaBalanceScale />}>
                     Compară
-                    <Link to="/compare" />
+                    <Link to="/compara" />
                   </MenuItem>
                 </SubMenu>
               </Menu>
@@ -50,24 +50,24 @@ let App = props => {
           </ProSidebar>
 
           <Switch>
-            <Route path="/dashboard">
+            <Route path="/harta">
               <Dashboard />
             </Route>
 
-            <Route path="/deputies">
+            <Route path="/deputati">
               <Deputies />
             </Route>
 
-            <Route path="/profiles">
+            <Route path="/senatori">
               <Profiles />
             </Route>
 
-            <Route path="/compare">
+            <Route path="/compara">
               <Compare />
             </Route>
 
             <Route path="/">
-              <Dashboard />
+              <Redirect to="/harta" />
             </Route>
           </Switch>
         </HashRouter>
