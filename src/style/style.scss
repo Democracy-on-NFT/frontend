@@ -27,6 +27,7 @@ body,
 .main {
   display: flex;
   flex-direction: row;
+  opacity: 0.999;
 
   .pro-sidebar-inner {
     position: fixed;
