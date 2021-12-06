@@ -1,17 +1,16 @@
 // libraries
-@import '~react-pro-sidebar/dist/scss/styles.scss';
-@import 'semantic-ui-css/semantic.min.css';
-@import 'react-loading-skeleton/dist/skeleton.css';
+@import "~react-pro-sidebar/dist/scss/styles.scss";
+@import "semantic-ui-css/semantic.min.css";
+@import "react-loading-skeleton/dist/skeleton.css";
 
 // custom code
-@import './components/variables.scss';
-@import './components/sidebar.scss';
-@import './components/senators.scss';
-@import './components/compare.scss';
-@import './components/customCheckbox.scss';
-@import './components/dashboard.scss';
-@import './components/county.scss';
-
+@import "./components/variables.scss";
+@import "./components/sidebar.scss";
+@import "./components/senators.scss";
+@import "./components/compare.scss";
+@import "./components/customCheckbox.scss";
+@import "./components/dashboard.scss";
+@import "./components/county.scss";
 
 // global
 html,
@@ -32,6 +31,25 @@ body,
 
   .pro-sidebar-inner {
     position: fixed;
+
+    .pro-sidebar-footer {
+      p {
+        transition: opacity 0.2s, color 0.2s, transform 1s;
+        cursor: pointer;
+        &:hover {
+          color: black;
+          i {
+            transform: scale(1.5);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .newsletter-modal {
+    width: 800px;
   }
 }
 
