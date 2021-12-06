@@ -6,7 +6,7 @@ import * as profileApi from '../../../api/profile.api';
 import ProfileCard from "../../common/profileCard/profileCard";
 import ModalCard from "../../common/modalCard/modalCard";
 
-const UserCards = () => {
+const Senators = () => {
 
     const [usersState, setUserState] = useState({
         data: [],
@@ -145,4 +145,4 @@ const UserCards = () => {
     );
 }
 
-export default UserCards;
+export default Senators;

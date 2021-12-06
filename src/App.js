@@ -5,8 +5,9 @@ import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } fr
 
 import Dashboard from './components/views/dashboard/dashboard';
 import Deputies from './components/views/deputies/deputies';
-import Profiles from './components/views/profiles/profiles';
+import Senators from './components/views/senators/senators';
 import Compare from './components/views/compare/compare';
+import County from './components/views/county/county';
 
 import background from './assets/background.png';
 import computer from './assets/computer.gif';
@@ -59,11 +60,15 @@ let App = props => {
             </Route>
 
             <Route path="/senatori">
-              <Profiles />
+              <Senators />
             </Route>
 
             <Route path="/compara">
               <Compare />
+            </Route>
+
+            <Route path="/judet/:id">
+              <County />
             </Route>
 
             <Route path="/">
