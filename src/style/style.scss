@@ -6,7 +6,7 @@
 // custom code
 @import './components/variables.scss';
 @import './components/sidebar.scss';
-@import './components/profiles.scss';
+@import './components/senators.scss';
 @import './components/compare.scss';
 @import './components/customCheckbox.scss';
 @import './components/dashboard.scss';
@@ -28,6 +28,7 @@ body,
 .main {
   display: flex;
   flex-direction: row;
+  opacity: 0.999;
 
   .pro-sidebar-inner {
     position: fixed;

@@ -1,64 +1,69 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Link } from 'react-router-dom';
-import { FaChartLine, FaUserTie } from 'react-icons/fa';
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { HashRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { FaMapMarkerAlt, FaUserTie, FaBalanceScale, FaUserFriends } from 'react-icons/fa';
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
 
 import Dashboard from './components/views/dashboard/dashboard';
 import Deputies from './components/views/deputies/deputies';
-import Profiles from './components/views/profiles/profiles';
+import Senators from './components/views/senators/senators';
 import Compare from './components/views/compare/compare';
 import County from './components/views/county/county';
 
+import background from './assets/background.png';
+import computer from './assets/computer.gif';
+
 let App = props => {
+
   return (
     <div className="main">
       <>
         <HashRouter>
-          <ProSidebar>
-            <Menu iconShape="square">
-              <MenuItem icon={<FaChartLine />}>
-                Dashboard
-                <Link to="/dashboard" />
-              </MenuItem>
+          <ProSidebar collapsed={false} image={background}>
+            <SidebarHeader>
+              <img src={computer} />
+            </SidebarHeader>
 
-              <MenuItem icon={<FaChartLine />}>
-                Județ
-                <Link to="/judet" />
-              </MenuItem>
-
-              <SubMenu title="Components" icon={<FaUserTie />}>
-                <MenuItem>
-                  Deputies
-                  <Link to="/deputies" />
+            <SidebarContent>
+              <Menu iconShape="square" popperArrow="true" >
+                <MenuItem active icon={<FaMapMarkerAlt />}>
+                  Hartă interactivă
+                  <Link to="/harta" />
                 </MenuItem>
 
-                <MenuItem>
-                  Profiles
-                  <Link to="/profiles" />
-                </MenuItem>
+                <SubMenu title="Parlamentari" icon={<FaUserTie />}>
+                  <MenuItem icon={<FaUserFriends />}>
+                    Deputați
+                    <Link to="/deputati" />
+                  </MenuItem>
 
-                <MenuItem>
-                  Compare
-                  <Link to="/compare" />
-                </MenuItem>
-              </SubMenu>
-            </Menu>
+                  <MenuItem icon={<FaUserFriends />}>
+                    Senatori
+                    <Link to="/senatori" />
+                  </MenuItem>
+
+                  <MenuItem icon={<FaBalanceScale />}>
+                    Compară
+                    <Link to="/compara" />
+                  </MenuItem>
+                </SubMenu>
+              </Menu>
+            </SidebarContent>
           </ProSidebar>
 
           <Switch>
-            <Route path="/dashboard">
+            <Route path="/harta">
               <Dashboard />
             </Route>
 
-            <Route path="/deputies">
+            <Route path="/deputati">
               <Deputies />
             </Route>
 
-            <Route path="/profiles">
-              <Profiles />
+            <Route path="/senatori">
+              <Senators />
             </Route>
 
-            <Route path="/compare">
+            <Route path="/compara">
               <Compare />
             </Route>
 
@@ -67,12 +72,11 @@ let App = props => {
             </Route>
 
             <Route path="/">
-              <Dashboard />
+              <Redirect to="/harta" />
             </Route>
           </Switch>
         </HashRouter>
       </>
-
     </div>
   );
 }

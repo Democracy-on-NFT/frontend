@@ -1,10 +1,43 @@
 .pro-sidebar {
-  min-width: 200px;
+  color: #6b6b6b;
+  font-weight: bold;
+  border-right: 1px solid rgba(173, 173, 173, 0.2);
+  min-width: 250px;
   max-width: 270px;
   width: auto;
-  
+
   &-inner {
     position: fixed;
     min-width: 200px;
+  }
+
+  .pro-sidebar-header img {
+    max-width: 249px;
+  }
+
+  .pro-sidebar-inner {
+    background: none;
+
+    img.sidebar-bg {
+      top: 440px;
+    }
+  }
+
+  .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+    background: none;
+  }
+
+  .pro-menu.shaped .pro-menu-item > .pro-inner-item > .pro-icon-wrapper {
+    background: none;
+  }
+
+  .pro-menu .pro-menu-item {
+    .pro-inner-item:hover {
+      color: black;
+    }
+  }
+
+  .pro-menu .pro-menu-item.active {
+    color: black;
   }
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Select, Header, Image, Modal } from "semantic-ui-react";
-import Icon from '@mdi/react';
-import { mdiMapMarkerRadius, mdiEmail } from '@mdi/js';
+
 
 import * as profileApi from '../../../api/profile.api';
+import ProfileCard from "../../common/profileCard/profileCard";
+import ModalCard from "../../common/modalCard/modalCard";
 
-const UserCards = () => {
+const Senators = () => {
 
     const [usersState, setUserState] = useState({
         data: [],
@@ -37,9 +38,7 @@ const UserCards = () => {
         }
     });
 
-    const uppercase = word => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-    };
+
 
     const loadData = async () => {
         const { per, page, data } = usersState;
@@ -129,33 +128,7 @@ const UserCards = () => {
 
                 <div className="ui equal grid">
                     {usersState.data ? usersState.data.map((data, index) => (
-                        <div className="four wide column">
-                            <div className="card" key={index.toString()} data-key={index.toString()} onClick={handleOnCardClick}>
-                                <div className="card-body">
-                                    <div className="avatar">
-                                        <img
-                                            src={data.picture.large}
-                                            className="card-img-top"
-                                            alt=""
-                                        />
-                                    </div>
-
-                                    <h5 className="card-title">
-                                        {uppercase(data.name.first) +
-                                            " " +
-                                            uppercase(data.name.last)}
-                                    </h5>
-
-                                    <p className="card-text">
-                                        {data.location.city +
-                                            ", " +
-                                            uppercase(data.location.state)}
-                                        <br />
-                                        <span className="phone">{data.phone}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        <ProfileCard data={data} index={index} handleOnCardClick={handleOnCardClick} />
                     )) : null}
                 </div>
                 {/* <button
@@ -166,35 +139,10 @@ const UserCards = () => {
             >
                 Load More Users
             </button> */}
-                <Modal
-                    closeIcon
-                    onClose={() => setOpenModal(false)}
-                    onOpen={() => setOpenModal(true)}
-                    open={openModal}
-                >
-                    <Modal.Header>Parlamentar</Modal.Header>
-                    <Modal.Content image>
-                        <Image size='medium' src={modalData.picture.large} wrapped />
-                        <Modal.Description>
-                            <Header>{modalData.name.first} {modalData.name.last} </Header>
-                            <p>
-                            <Icon path={mdiEmail}
-                                    size={1} />
-                                {modalData.email}
-                            </p>
-                            <p>{modalData.nat}</p>
-                            <p>{modalData.dob.age}</p>
-                            <p>
-                                <Icon path={mdiMapMarkerRadius}
-                                    size={1} />
-                                {modalData.location.city}, {modalData.location.state}
-                            </p>
-                        </Modal.Description>
-                    </Modal.Content>
-                </Modal>
+                <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
             </div>
         </>
     );
 }
 
-export default UserCards;
+export default Senators;

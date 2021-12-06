@@ -1,6 +1,5 @@
 import { useHistory } from 'react-router-dom';
 
-import County from '../../views/county/county';
 import countiesPath from '../../utils/countiesPath.json';
 
 import '../../../style/components/mapChart.scss';
@@ -16,8 +15,6 @@ const MapChart = () => {
         let id;
         if (data.target.id && data.target.id.includes('iso_'))
             id = data.target.id.replace('iso_', '');
-        else if (!data.target.id && data.target.nodeName == 'tspan')
-            id = data.target.parentElement.id.replace('iso_', '');
         else
             id = data.target.id;
 
@@ -36,8 +33,6 @@ const MapChart = () => {
         let id;
         if (data.target.id && data.target.id.includes('iso_'))
             id = data.target.id.replace('iso_', '');
-        else if (!data.target.id && data.target.nodeName == 'tspan')
-            id = data.target.parentElement.id.replace('iso_', '');
         else
             id = data.target.id;
 
@@ -68,8 +63,6 @@ const MapChart = () => {
         let id;
         if (data.target.id && data.target.id.includes('iso_'))
             id = data.target.id.replace('iso_', '');
-        else if (!data.target.id && data.target.nodeName == 'tspan')
-            id = data.target.parentElement.id.replace('iso_', '');
         else
             id = data.target.id;
 
@@ -142,13 +135,13 @@ const MapChart = () => {
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_3" transform="matrix(1 0 0 1 332 317)" fontSize="14" cursor="pointer">Argeș</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_4" transform="matrix(1 0 0 1 474 202)" fontSize="14" cursor="pointer">Bacău</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_5" transform="matrix(1 0 0 1 136 145)" fontSize="15" cursor="pointer">Bihor</text>
-                        <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_6" transform="matrix(1 0 0 1 301 110)" cursor="pointer"><tspan x="0" y="0" fontSize="13">Bistrița-</tspan><tspan x="-0" y="15" fontSize="13">Năsăud</tspan></text>
+                        <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_6" transform="matrix(1 0 0 1 285 110)" fontSize="13" cursor="pointer">Bistrița-Năsăud</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_7" transform="matrix(1 0 0 1 467 51)" fontSize="13" cursor="pointer">Botoșani</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_8" transform="matrix(1 0 0 1 357 267)" fontSize="13" cursor="pointer">Brașov</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_9" transform="matrix(1 0 0 1 541 343)" fontSize="14" cursor="pointer">Brăila</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_10" transform="matrix(1 0 0 1 368 401)" fontSize="14" cursor="pointer">București</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_11" transform="matrix(1 0 0 1 469 320)" fontSize="14" cursor="pointer">Buzău</text>
-                        <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_12" transform="matrix(1 0 0 1 119 327)" cursor="pointer"><tspan x="0" y="0" fontSize="14">Caraș-</tspan><tspan x="-2" y="16" fontSize="14">Severin</tspan></text>
+                        <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_12" transform="matrix(1 0 0 1 100 327)" fontSize="13" cursor="pointer">Caraș-Severin</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_13" transform="matrix(1 0 0 1 485 422)" fontSize="13" cursor="pointer">Călărași</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_14" transform="matrix(1 0 0 1 244 163)" fontSize="14" cursor="pointer">Cluj</text>
                         <text onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} id="iso_ro_15" transform="matrix(1 0 0 1 569 444)" fontSize="13" cursor="pointer">Constanța</text>
