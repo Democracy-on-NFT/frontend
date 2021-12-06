@@ -1,13 +1,14 @@
 import React from 'react';
 import { HashRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 import { FaMapMarkerAlt, FaUserTie, FaBalanceScale, FaUserFriends } from 'react-icons/fa';
-import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent } from 'react-pro-sidebar';
+import { ProSidebar, Menu, MenuItem, SubMenu, SidebarHeader, SidebarContent, SidebarFooter } from 'react-pro-sidebar';
 
 import Dashboard from './components/views/dashboard/dashboard';
 import Deputies from './components/views/deputies/deputies';
 import Senators from './components/views/senators/senators';
 import Compare from './components/views/compare/compare';
 import County from './components/views/county/county';
+import Newsletter from './components/common/newsletter/newsletter';
 
 import background from './assets/background.png';
 import computer from './assets/computer.gif';
@@ -48,6 +49,10 @@ let App = props => {
                 </SubMenu>
               </Menu>
             </SidebarContent>
+            <SidebarFooter>
+              <Newsletter />
+              <p>Sursa: <a href="http://www.parlament.ro/" target="_blank">parlament.ro/</a></p>
+            </SidebarFooter>
           </ProSidebar>
 
           <Switch>
