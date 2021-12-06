@@ -66,7 +66,19 @@ const County = props => {
         value: 2
     }];
 
-    console.log('id: ', id);
+    const pieData = [{
+        party: "PNL",
+        sales: 3
+    }, {
+        party: "PSD",
+        sales: 2
+    }, {
+        party: "USR",
+        sales: 1
+    }, {
+        party: "AUR",
+        sales: 1
+    }];
 
     const handleOnCardClick = (e) => {
         const card = e.target.closest('.card');
@@ -99,7 +111,7 @@ const County = props => {
                         <Grid.Column textAlign='right' className="aligned">
                             <Menu fluid vertical>
                                 <Menu.Item className='header'>
-                                    Mandate <Select options={data} />
+                                    Mandate <Select options={data} defaultValue={data[data.length-1].value} />
                                 </Menu.Item>
                             </Menu>
                         </Grid.Column>
@@ -116,13 +128,13 @@ const County = props => {
                 <div className="profiles-container">
                     <div className="ui equal grid">
                         {usersState.data ? usersState.data.map((data, index) => (
-                            <ProfileCard data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                            <ProfileCard key={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
                         )) : null}
                     </div>
                 </div>
                 <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
 
-                <PieChart />
+                <PieChart data={pieData} />
             </div>
         </>
     );

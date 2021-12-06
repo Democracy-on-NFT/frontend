@@ -17,24 +17,6 @@ const PieChart = props => {
             })
         );
 
-        // Define data
-        const data = [{
-            party: "PNL",
-            sales: 100000
-        }, {
-            party: "PSD",
-            sales: 160000
-        }, {
-            party: "USR",
-            sales: 80000
-        }, {
-            party: "AUR",
-            sales: 20000
-        }, {
-            party: "UDMR",
-            sales: 9000
-        }];
-
         // Create series
         const series = chart.series.push(
             am5percent.PieSeries.new(root, {
@@ -43,7 +25,7 @@ const PieChart = props => {
                 categoryField: "party"
             })
         );
-        series.data.setAll(data);
+        series.data.setAll(props.data);
 
         // Add legend
         const legend = chart.children.push(am5.Legend.new(root, {
