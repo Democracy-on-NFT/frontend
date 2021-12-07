@@ -10,46 +10,23 @@ const Senators = () => {
 
     const [usersState, setUserState] = useState({
         data: [],
-        per: 8,
-        page: 1,
-        total_pages: null
     });
 
     const [partyFilter, setPartyFilter] = useState({});
     const [countyFilter, setCountyFilter] = useState({});
     const [openModal, setOpenModal] = useState(false);
-    const [modalData, setModalData] = useState({
-        name: {
-            first: '',
-            last: ''
-        },
-        email: '',
-        dob: {
-            date: '',
-            age: ''
-        },
-        nat: '',
-        picture: {
-            large: ''
-        },
-        location: {
-            city: '',
-            state: ''
-        }
-    });
+    const [modalData, setModalData] = useState();
 
 
 
     const loadData = async () => {
         const { per, page, data } = usersState;
-        const result = await profileApi.getProfile(per, page);
+        const result = await profileApi.getDeputies();
+
+        console.log(result);
 
         setUserState({
-            data: [...data, ...result.results],
-            scrolling: false,
-            total_pages: result.info.results,
-            page: result.info.page + 1,
-            per: 8
+            data: result
         });
     };
 
@@ -128,7 +105,7 @@ const Senators = () => {
 
                 <div className="ui equal grid">
                     {usersState.data ? usersState.data.map((data, index) => (
-                        <ProfileCard data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                        <ProfileCard key={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
                     )) : null}
                 </div>
                 {/* <button

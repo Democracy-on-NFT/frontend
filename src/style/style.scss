@@ -47,6 +47,31 @@ body,
   }
 }
 
+.modal-profile {
+  .profile-pic img {
+    width: 230px;
+  }
+
+  .description {
+    p {
+      display: flex;
+      svg {
+        margin-right: 5px;
+      }
+
+      span {
+        margin-top: 3px;
+      }
+    }
+    .party-logo {
+      display: inline-grid;
+      img {
+        width: 100px;
+      }
+    }
+  }
+}
+
 @media only screen and (min-width: 1200px) {
   .newsletter-modal {
     width: 800px;

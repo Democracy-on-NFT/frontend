@@ -1,7 +1,9 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, Menu, Select } from 'semantic-ui-react';
 
 import MapChart from '../../common/mapChart/mapChart';
+import * as profileApi from '../../../api/profile.api';
 
 import worldMap from '../../../assets/world-map.jpg';
 
@@ -24,6 +26,16 @@ const Dashboard = props => {
     document.getElementById('world-map-text').style.display = 'none';
   }
 
+  const loadData = async () => {
+    const result = await profileApi.getCounties();
+
+    console.log(result);
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
   return (
     <>
       <div className="dashboard-container">
@@ -41,8 +53,10 @@ const Dashboard = props => {
             <Grid.Column textAlign='center'>
               <Menu fluid vertical>
                 <Menu.Item className='header'>Total: 320</Menu.Item>
-                <Menu.Item>România: 285</Menu.Item>
-                <Menu.Item>Diaspora: 35</Menu.Item>
+                <Menu.Item><span>România: 285</span> | <span>Diaspora: 30</span></Menu.Item>
+                <Menu.Item>Deputați: 35</Menu.Item>
+                <Menu.Item>Senatori: 35</Menu.Item>
+
               </Menu>
             </Grid.Column>
             <Grid.Column textAlign='right' className="aligned">

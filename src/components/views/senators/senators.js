@@ -9,47 +9,24 @@ import ModalCard from "../../common/modalCard/modalCard";
 const Senators = () => {
 
     const [usersState, setUserState] = useState({
-        data: [],
-        per: 8,
-        page: 1,
-        total_pages: null
+        data: []
     });
 
-    const [partyFilter, setPartyFilter] = useState({});
+    const [partyFilter, setPartyFilter] = useState([{}]);
     const [countyFilter, setCountyFilter] = useState({});
     const [openModal, setOpenModal] = useState(false);
-    const [modalData, setModalData] = useState({
-        name: {
-            first: '',
-            last: ''
-        },
-        email: '',
-        dob: {
-            date: '',
-            age: ''
-        },
-        nat: '',
-        picture: {
-            large: ''
-        },
-        location: {
-            city: '',
-            state: ''
-        }
-    });
+    const [modalData, setModalData] = useState();
 
 
 
     const loadData = async () => {
         const { per, page, data } = usersState;
-        const result = await profileApi.getProfile(per, page);
+        const result = await profileApi.getDeputies();
+
+        console.log(result);
 
         setUserState({
-            data: [...data, ...result.results],
-            scrolling: false,
-            total_pages: result.info.results,
-            page: result.info.page + 1,
-            per: 8
+            data: result
         });
     };
 
@@ -75,12 +52,15 @@ const Senators = () => {
         key: 2
     }];
 
-    const onChangePartyHandler = (e) => {
-        const party = dummyParties.filter(party => {
-            return party.text === e.target.textContent;
-        })
+    const onChangePartyHandler = async (e) => {
+        // const filteredSenators = usersState.filter(party => {
+        //     return party.text === e.target.textContent;
+        // })
 
-        setPartyFilter(party[0]);
+        // console.log(filteredSenators)
+
+        
+        // setPartyFilter(filteredSenators[0]);
     }
 
     const onChangecountyHandler = (e) => {
@@ -88,17 +68,30 @@ const Senators = () => {
             return county.text === e.target.textContent;
         })
 
+        console.log(county)
+
         setCountyFilter(county[0]);
     }
 
-    const handleOnCardClick = (e) => {
+    const handleOnCardClick = async (e) => {
         const card = e.target.closest('.card');
 
-        setModalData(usersState.data[card.getAttribute('data-key')]);
+        const user = usersState.data[card.getAttribute('data-key')];
+        
+        const result = await profileApi.getDeputiesById(9, user.id);
+        
+        setModalData(result);
         setOpenModal(true);
     }
 
-    useEffect(() => {
+    useEffect(async () => {
+        const parties = await profileApi.getParties();
+        parties.map(party => {
+            party.text = party.abbreviation;
+            party.value = party.id;
+        });
+        console.log(parties);
+        setPartyFilter(parties);
         loadData();
     }, []);
 
@@ -109,7 +102,7 @@ const Senators = () => {
                 <div className="ui equal grid">
                     <div>
                         <Select
-                            options={dummyParties}
+                            options={partyFilter}
                             placeholder="Select party"
                             onChange={onChangePartyHandler}
                         // value={partyFilter.value}
@@ -128,7 +121,7 @@ const Senators = () => {
 
                 <div className="ui equal grid">
                     {usersState.data ? usersState.data.map((data, index) => (
-                        <ProfileCard data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                        <ProfileCard key={index} id={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
                     )) : null}
                 </div>
                 {/* <button

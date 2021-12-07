@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
 import Skeleton from 'react-loading-skeleton'
@@ -9,8 +9,12 @@ import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 import PartyProfile from "../../common/partyProfile/partyProfile";
 import StackedChart from "../../common/stackedChart/stackedChart";
 
+
+import * as profileApi from '../../../api/profile.api';
+
 const Compare = () => {
 
+    const [usersState, setUserState] = useState([{}]);
     const [isPartyTypeChecked, setIsPartyTypeChecked] = useState(false);
     const [isDeputyTypeChecked, setIsDeputyTypeChecked] = useState(true);
     const [leftDeputyInfo, setLeftDeputyInfo] = useState(null);
@@ -82,12 +86,14 @@ const Compare = () => {
     });
 
     const onChangeDeputyHandler = (e, position) => {
+
         if (e) {
             switch (position) {
                 case 'left':
-                    const leftDeputy = dummyDeputies.filter(deputy => {
+                    const leftDeputy = usersState.filter(deputy => {
                         return deputy.text === e.target.textContent;
                     })
+                    console.log(leftDeputy[0])
                     setLeftDeputyInfo(leftDeputy[0]);
                     break;
                 case 'right':
@@ -109,6 +115,7 @@ const Compare = () => {
                     const leftParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
                     })
+                    
                     setLeftPartyInfo(leftParty[0]);
                     break;
                 case 'right':
@@ -122,6 +129,24 @@ const Compare = () => {
             }
         }
     };
+
+    const loadData = async () => {
+        const result = await profileApi.getDeputies();
+
+        result.map(deputy => {
+            deputy.text = deputy.name;
+            deputy.value = deputy.id;
+        });
+
+        console.log(result)
+
+        setUserState(result);
+    };
+
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     return (
         <>
@@ -154,9 +179,14 @@ const Compare = () => {
                         <div className="select-to-compare-panel">
                             <div className="deputy-panel">
                                 <Select
-                                    options={dummyDeputies}
+                                    selection
+                                    search
+                                    options={usersState}
                                     placeholder="Alege deputat"
-                                    onChange={(option) => onChangeDeputyHandler(option, 'left')} />
+                                    // onSelectChange={option => onChangeDeputyHandler(option)}
+                                onChange={(option) => onChangeDeputyHandler(option, 'left')} 
+                                // value={partyFilter.value}
+                                />
                             </div>
 
                             <div className="data-panel">
@@ -182,11 +212,6 @@ const Compare = () => {
                             </Container>
 
                             <Container fluid className="compare-informations-label">
-                                <h1>
-                                    <p>
-                                        Nume
-                                    </p>
-                                </h1>
                                 <div>
                                     <p>
                                         Vârsta
