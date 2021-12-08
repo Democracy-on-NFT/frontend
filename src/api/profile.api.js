@@ -45,3 +45,19 @@ export const getDeputiesByCounty = async (legislature_id) => {
     });
     return data;
 }
+
+export const getDeputiesByCommunity = async (legislature_id) => {
+    const { data } = await axios.get(`${host}/deputies_by_community`, {
+        params: {
+            legislature_id
+        }
+    });
+    return data;
+}
+
+export const postNotifications = async (data) => {
+    const response = await axios.post(`${host}/notifications`, {
+        "notification": data
+    });
+    return response;
+}

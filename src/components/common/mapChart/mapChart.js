@@ -1,17 +1,15 @@
 import { useHistory } from 'react-router-dom';
 
 import countiesPath from '../../utils/countiesPath.json';
-import * as profileApi from '../../../api/profile.api';
 
 import '../../../style/components/mapChart.scss';
-import { useState, useEffect } from 'react';
 
-const MapChart = () => {
+const MapChart = (props) => {
+    const { countiesData } = props;
     const highlightCountyColor = '#C0E6FF';
     const defaultColor = '#FAFDFF';
 
     const history = useHistory();
-
 
     const onHandleClick = (data) => {
         let id;
@@ -22,11 +20,6 @@ const MapChart = () => {
 
         if (!id)
             return;
-
-        const element = data.target;
-        console.log(document.getElementById(id));
-
-
 
         history.push(`/judet/${id}`);
     }
@@ -43,20 +36,27 @@ const MapChart = () => {
 
         const element = document.getElementById(id);
         const rect = document.getElementById('info-rect');
-        const text = document.getElementById('info-text');
+        const deputiesText = document.getElementById('deputies-text');
+        const senatorsText = document.getElementById('senators-text');
 
-        text.textContent = `Deputati: ${document.getElementById(`iso_${id}`).textContent}`;
+        const countyId = id.replace('ro_', '');
+
+        deputiesText.textContent = `Deputati: ${countiesData[countyId] && countiesData[countyId].deputati || 0}`;
+        senatorsText.textContent = `Senatori: ${countiesData[countyId] && countiesData[countyId].senatori || 0}`;
 
         rect.style.display = "block";
-        text.style.display = "block";
+        deputiesText.style.display = "block";
+        senatorsText.style.display = "block";
 
         const position = element.getBoundingClientRect();
-        const x = position.left / 2, y = position.top / 2;
+        const x = position.left / 2 - 120, y = position.top / 2 - 60;
 
         rect.setAttribute('x', x);
         rect.setAttribute('y', y);
-        text.setAttribute('x', x + 10);
-        text.setAttribute('y', y + 20);
+        deputiesText.setAttribute('x', x + 10);
+        senatorsText.setAttribute('x', x + 10);
+        deputiesText.setAttribute('y', y + 20);
+        senatorsText.setAttribute('y', y + 40);
 
         element.style.fill = highlightCountyColor;
     }
@@ -74,23 +74,16 @@ const MapChart = () => {
         const element = document.getElementById(id);
 
         const rect = document.getElementById('info-rect');
-        const text = document.getElementById('info-text');
+        const deputiesText = document.getElementById('deputies-text');
+        const senatorsText = document.getElementById('senators-text');
+
 
         rect.style.display = "none";
-        text.style.display = "none";
+        deputiesText.style.display = "none";
+        senatorsText.style.display = "none";
 
         element.style.fill = defaultColor;
     }
-
-    const loadData = async () => {
-        const result = await profileApi.getCounties();
-
-        console.log(result);
-    };
-
-    useEffect(() => {
-        loadData();
-    }, []);
 
     return (
         <>
@@ -188,7 +181,8 @@ const MapChart = () => {
 
                     <g>
                         <rect id="info-rect" rx="10" ry="10" width="120" height="50" />
-                        <text id="info-text" />
+                        <text id="deputies-text" />
+                        <text id="senators-text" />
                     </g>
                 </svg>
             </div>

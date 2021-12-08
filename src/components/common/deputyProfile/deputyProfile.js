@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from "react";
-
-import * as profileApi from '../../../api/profile.api';
+import React from "react";
 
 const DeputyProfile = props => {
     const { data } = props;
-
-    const [deputy, setDeputy] = useState({});
-
     const getAge = (dateString) => {
         const today = new Date();
         const birthDate = new Date(dateString);
-        const age = today.getFullYear() - birthDate.getFullYear();
+        let age = today.getFullYear() - birthDate.getFullYear();
         const m = today.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
             age--;
@@ -22,36 +17,23 @@ const DeputyProfile = props => {
         return word.charAt(0).toUpperCase() + word.slice(1);
     };
 
-    const loadData = async () => {
-        const result = await profileApi.getDeputiesById(9, data.id);
-
-        // console.log(result)
-
-        setDeputy(result);
-    };
-
-    useEffect(() => {
-        loadData();
-    }, []);
-
     return (
         <div key={data.id}>
             <div className="deputy-profile-info">
                 <p>
-                    {deputy.room ? uppercase(deputy.room) : '-'}
+                    {data.room ? uppercase(data.room) : '-'}
                 </p>
                 <p>
-                    {deputy.date_of_birth ? getAge(deputy.date_of_birth) : '-'}
+                    {data.date_of_birth ? getAge(data.date_of_birth) : '-'}
                 </p>
                 <p>
-                    {deputy.activities ? deputy.activities[0].electoral_circumscription.county_name : '-'}
+                    {data.activities ? data.activities[0].electoral_circumscription.county_name : '-'}
                 </p>
                 <p>
-                    {deputy.parties && deputy.parties[1] ? deputy.parties[1].party.abbreviation : '-'}
+                    {data.parties && data.parties[data.parties.length - 1] ? data.parties[data.parties.length - 1].party.abbreviation : '-'}
                 </p>
                 <p>
-
-                    {deputy.parties && deputy.parties[0] ? deputy.parties[0].party.abbreviation : '-'}
+                    {data.parties && data.parties[data.parties.length - 2] ? data.parties[data.parties.length - 2].party.abbreviation : '-'}
                 </p>
             </div>
         </div>

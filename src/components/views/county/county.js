@@ -5,46 +5,14 @@ import { useParams } from 'react-router-dom';
 import PieChart from '../../common/pieChart/pieChart';
 import ProfileCard from "../../common/profileCard/profileCard";
 import ModalCard from "../../common/modalCard/modalCard";
-import countiesPath from '../../utils/countiesPath.json';
-import countiesName from '../../utils/countiesName.json';
 
 import * as profileApi from '../../../api/profile.api';
 
-const County = props => {
-
-    const [usersState, setUserState] = useState({
-        data: [],
-    });
-
+const County = () => {
+    const [parliamentarians, setParliamentarians] = useState([{}]);
+    const [county, setCounty] = useState();
     const [openModal, setOpenModal] = useState(false);
-    const [modalData, setModalData] = useState({
-        name: {
-            first: '',
-            last: ''
-        },
-        email: '',
-        dob: {
-            date: '',
-            age: ''
-        },
-        nat: '',
-        picture: {
-            large: ''
-        },
-        location: {
-            city: '',
-            state: ''
-        }
-    });
-
-    const loadData = async () => {
-        const { per, page, data } = usersState;
-        const result = await profileApi.getDeputies();
-
-        setUserState({
-            data: result
-        });
-    };
+    const [modalData, setModalData] = useState();
     const { id } = useParams();
 
     const data = [{
@@ -71,12 +39,29 @@ const County = props => {
         sales: 1
     }];
 
-    const handleOnCardClick = (e) => {
+    const handleOnCardClick = async (e) => {
         const card = e.target.closest('.card');
+        const user = parliamentarians.filter(parliamentar => {
+            return parliamentar.id == card.getAttribute('data-key');
+        });
+        const senator = await profileApi.getDeputiesById(9, user[0].id);
 
-        setModalData(usersState.data[card.getAttribute('data-key')]);
+        setModalData(senator);
         setOpenModal(true);
     }
+
+    const loadData = async () => {
+        const result = await profileApi.getDeputies();
+        const counties = await profileApi.getDeputiesByCounty(9);
+
+        const countyId = id.replace('ro_', '');
+        const countyParliamentarians = result.filter(county => {
+            return county.circumscription.number == countyId;
+        });
+
+        setCounty(counties[countyId]);
+        setParliamentarians(countyParliamentarians);
+    };
 
     useEffect(() => {
         loadData();
@@ -89,20 +74,20 @@ const County = props => {
                     <Grid.Row columns={3}>
                         <Grid.Column>
                             <Menu fluid vertical>
-                                <Menu.Item className='header'>{countiesName[id]}</Menu.Item>
+                                <Menu.Item className='header'>{county ? county.county_name : null}</Menu.Item>
                             </Menu>
                         </Grid.Column>
                         <Grid.Column textAlign='center'>
                             <Menu fluid vertical>
-                                <Menu.Item className='header'>Parlamentari: 7</Menu.Item>
-                                <Menu.Item>Deputați: 5</Menu.Item>
-                                <Menu.Item>Senatori: 2</Menu.Item>
+                                <Menu.Item className='header'>Parlamentari: {county ? county.deputati + county.senatori : null}</Menu.Item>
+                                <Menu.Item>Deputați: {county ? county.deputati : null}</Menu.Item>
+                                <Menu.Item>Senatori: {county ? county.senatori : null}</Menu.Item>
                             </Menu>
                         </Grid.Column>
                         <Grid.Column textAlign='right' className="aligned">
                             <Menu fluid vertical>
                                 <Menu.Item className='header'>
-                                    Mandate <Select options={data} defaultValue={data[data.length-1].value} />
+                                    Mandate <Select options={data} defaultValue={data[data.length - 1].value} />
                                 </Menu.Item>
                             </Menu>
                         </Grid.Column>
@@ -111,7 +96,7 @@ const County = props => {
 
                 <div className="profiles-container">
                     <div className="ui equal grid">
-                        {usersState.data ? usersState.data.map((data, index) => (
+                        {parliamentarians ? parliamentarians.map((data, index) => (
                             <ProfileCard key={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
                         )) : null}
                     </div>

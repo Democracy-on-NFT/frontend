@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createElement } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
 import Skeleton from 'react-loading-skeleton';
 import * as am5 from '@amcharts/amcharts5';
-import * as am5xy from '@amcharts/amcharts5/xy';
-import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
@@ -15,8 +13,7 @@ import StackedChart from "../../common/stackedChart/stackedChart";
 import * as profileApi from '../../../api/profile.api';
 
 const Compare = () => {
-
-    const [usersState, setUserState] = useState([{}]);
+    const [parliamentarians, setParliamentarians] = useState([{}]);
     const [leftUserStats, setLeftUserStats] = useState([]);
     const [rightUserStats, setRightUserStats] = useState([]);
     const [isPartyTypeChecked, setIsPartyTypeChecked] = useState(false);
@@ -25,8 +22,6 @@ const Compare = () => {
     const [rightDeputyInfo, setRightDeputyInfo] = useState(null);
     const [leftPartyInfo, setLeftPartyInfo] = useState(null);
     const [rightPartyInfo, setRightPartyInfo] = useState(null);
-    const [root, setRoot] = useState(null);
-
 
     const onCompareTypeChange = (type) => {
         if (type === 'deputies') {
@@ -74,29 +69,34 @@ const Compare = () => {
         if (e) {
             switch (position) {
                 case 'left':
-                    const leftDeputy = usersState.filter(deputy => {
+                    const leftDeputy = parliamentarians.filter(deputy => {
                         return deputy.text === e.target.textContent;
                     });
-                    setLeftDeputyInfo(leftDeputy[0]);
-                    // console.log('^^^^^^^^^^^^^^^^^^',leftDeputy[0]);
-                    const result = await getDeputyById(leftDeputy[0].id);
+                    const leftResult = await getDeputyById(leftDeputy[0].id);
 
-                    console.log(result)
-
-                    // setDeputy(result);
+                    setLeftDeputyInfo(leftResult);
                     setLeftUserStats([
-                        result.activities[0].draft_decisions,
-                        result.activities[0].legislative_initiatives,
-                        result.activities[0].questions,
-                        result.activities[0].signed_motions,
-                        result.activities[0].speeches
-                    ])
+                        leftResult.activities[0].draft_decisions,
+                        leftResult.activities[0].legislative_initiatives,
+                        leftResult.activities[0].questions,
+                        leftResult.activities[0].signed_motions,
+                        leftResult.activities[0].speeches
+                    ]);
                     break;
                 case 'right':
-                    const rightDeputy = usersState.filter(deputy => {
+                    const rightDeputy = parliamentarians.filter(deputy => {
                         return deputy.text === e.target.textContent;
                     })
-                    setRightDeputyInfo(rightDeputy[0]);
+                    const rightResult = await getDeputyById(rightDeputy[0].id);
+
+                    setRightDeputyInfo(rightResult);
+                    setRightUserStats([
+                        rightResult.activities[0].draft_decisions,
+                        rightResult.activities[0].legislative_initiatives,
+                        rightResult.activities[0].questions,
+                        rightResult.activities[0].signed_motions,
+                        rightResult.activities[0].speeches
+                    ]);
                     break;
                 default:
                     break;
@@ -110,14 +110,15 @@ const Compare = () => {
                 case 'left':
                     const leftParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
-                    })
+                    });
 
                     setLeftPartyInfo(leftParty[0]);
                     break;
                 case 'right':
                     const rightParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
-                    })
+                    });
+
                     setRightPartyInfo(rightParty[0]);
                     break;
                 default:
@@ -125,6 +126,21 @@ const Compare = () => {
             }
         }
     };
+
+    const rerenderStackedCHart = () => {
+        if (document.getElementById('stacked-bar-chart'))
+            document.getElementById('stacked-bar-chart').remove();
+
+        const child = document.createElement('div');
+        const parent = document.querySelector('.compare-container');
+
+        child.id = 'stacked-bar-chart';
+        parent.append(child);
+
+        const root = am5.Root.new('stacked-bar-chart');
+
+        StackedChart({ left: leftUserStats, right: rightUserStats, root });
+    }
 
     const loadData = async () => {
         const result = await profileApi.getDeputies();
@@ -134,17 +150,15 @@ const Compare = () => {
             deputy.value = deputy.id;
         });
 
-        // console.log(result)
-
-        setUserState(result);
+        setParliamentarians(result);
     };
 
     useEffect(() => {
+        rerenderStackedCHart()
+    }, [leftUserStats, rightUserStats]);
+
+    useEffect(() => {
         loadData();
-        const el = document.getElementById('stacked-bar-chart');
-        el.innerHTML = "";
-        const root = am5.Root.new(el);
-        setRoot(root);
     }, []);
 
     return (
@@ -180,11 +194,10 @@ const Compare = () => {
                                 <Select
                                     selection
                                     search
-                                    options={usersState}
+                                    options={parliamentarians}
                                     placeholder="Alege parlamentar"
                                     onChange={(option) => onChangeDeputyHandler(option, 'left')}
                                 />
-                                {/* <img src={leftDeputyInfo ? leftDeputyInfo.image_link : ''} /> */}
                             </div>
 
                             <div className="data-panel">
@@ -198,10 +211,9 @@ const Compare = () => {
                                 <Select
                                     selection
                                     search
-                                    options={usersState}
+                                    options={parliamentarians}
                                     placeholder="Alege parlamentar"
                                     onChange={(option) => onChangeDeputyHandler(option, 'right')} />
-                                {/* <img src={rightDeputyInfo ? rightDeputyInfo.image_link : ''} /> */}
                             </div>
                         </div>
 
@@ -227,10 +239,10 @@ const Compare = () => {
                                         Județ
                                     </p>
                                     <p>
-                                        Partid precedent
+                                        Partid curent
                                     </p>
                                     <p>
-                                        Partid curent
+                                        Partid precedent
                                     </p>
 
                                 </div>
@@ -317,9 +329,6 @@ const Compare = () => {
                         </div>
                     </>
                 )}
-
-                <StackedChart left={leftUserStats} right={[]} />
-
             </Container>
         </>
     )

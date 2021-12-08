@@ -8,6 +8,8 @@ import * as profileApi from '../../../api/profile.api';
 import worldMap from '../../../assets/world-map.jpg';
 
 const Dashboard = props => {
+  const [total, setTotal] = useState();
+  const [countiesData, setCountiesData] = useState([{}]);
   const data = [{
     id: 1,
     text: '2018 - 2020',
@@ -27,9 +29,12 @@ const Dashboard = props => {
   }
 
   const loadData = async () => {
-    const result = await profileApi.getCounties();
+    const result = await profileApi.getDeputiesByCommunity(9);
+    const counties = await profileApi.getDeputiesByCounty(9);
 
-    console.log(result);
+    setTotal(result);
+
+    setCountiesData(counties);
   };
 
   useEffect(() => {
@@ -52,10 +57,16 @@ const Dashboard = props => {
             </Grid.Column>
             <Grid.Column textAlign='center'>
               <Menu fluid vertical>
-                <Menu.Item className='header'>Total: 320</Menu.Item>
-                <Menu.Item><span>România: 285</span> | <span>Diaspora: 30</span></Menu.Item>
-                <Menu.Item>Deputați: 35</Menu.Item>
-                <Menu.Item>Senatori: 35</Menu.Item>
+                <Menu.Item className='header'>Total: {total ? total.diaspora.deputati
+                  + total.diaspora.senatori
+                  + total.romania.deputati
+                  + total.romania.senatori : null}</Menu.Item>
+                <Menu.Item>
+                  <span>România: {total ? total.romania.deputati + total.romania.senatori : null}</span>
+                  | <span>Diaspora: {total ? total.diaspora.deputati + total.diaspora.senatori : null}</span>
+                </Menu.Item>
+                <Menu.Item>Deputați: {total ? total.romania.deputati + total.diaspora.deputati : null}</Menu.Item>
+                <Menu.Item>Senatori: {total ? total.romania.senatori + total.diaspora.senatori : null}</Menu.Item>
 
               </Menu>
             </Grid.Column>
@@ -69,7 +80,7 @@ const Dashboard = props => {
           </Grid.Row>
         </Grid>
 
-        <MapChart />
+        <MapChart countiesData={countiesData} />
       </div>
     </>
   );

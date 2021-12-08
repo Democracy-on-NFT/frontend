@@ -14,6 +14,7 @@ const ModalCard = props => {
 
     return (
         <Modal
+            key={modalData.id}
             className="modal-profile"
             closeIcon
             onClose={() => setOpenModal(false)}

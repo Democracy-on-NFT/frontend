@@ -1,9 +1,9 @@
 const ProfileCard = props => {
-    const { index, data, handleOnCardClick } = props;
+    const { data, handleOnCardClick } = props;
 
     return (
         <div className="four wide column">
-            <div className="card" key={index.toString()} data-key={index.toString()} onClick={handleOnCardClick}>
+            <div className="card" key={data.id} data-key={data.id} onClick={handleOnCardClick}>
                 <div className="card-body">
                     <div className="avatar">
                         <img

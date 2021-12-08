@@ -1,16 +1,18 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .map-container {
   #info-rect {
-    fill: #BCC5CC;
-    stroke: #BCC5CC;
+    fill: #bcc5cc;
+    stroke: #bcc5cc;
     stroke-width: 1;
     opacity: 0.9;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+    pointer-events: none;
     display: none;
   }
 
   #info-text {
-      font-size: 12px;
+    pointer-events: none;
+    font-size: 12px;
   }
 }

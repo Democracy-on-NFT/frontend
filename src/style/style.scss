@@ -71,6 +71,24 @@ body,
     }
   }
 }
+.newsletter-modal {
+  .input {
+    margin-left: 50px;
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .actions {
+    span {
+      vertical-align: bottom;
+      img {
+        margin-left: 20px;
+        width: 163px;
+        height: 40px;
+      }
+    }
+  }
+}
 
 @media only screen and (min-width: 1200px) {
   .newsletter-modal {
