@@ -6,21 +6,21 @@ import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 const StackedChart = (props) => {
   const { left, right } = props;
 
-  // const [element, setElement] = useState(document.getElementById('stacked-bar-chart'));
+  const [element, setElement] = useState(document.getElementById('stacked-bar-chart'));
 
-  // console.log(element);
+  console.log(element);
 
   useEffect(() => {
-    // let root;
-    // // if (!root)
-    // //   setRoot(am5.Root.new('stacked-bar-chart'));
-    // if (element)
-    //   root = am5.Root.new(element);
-    // else return;
+    let root;
+    // if (!root)
+    //   setRoot(am5.Root.new('stacked-bar-chart'));
+    if (element)
+      root = am5.Root.new(element);
+    else return;
 
-    // console.log(root);
+    console.log(root);
 
-    const root = am5.Root.new('stacked-bar-chart');
+    // root = am5.Root.new('stacked-bar-chart');
 
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -139,7 +139,7 @@ const StackedChart = (props) => {
     // Make stuff animate on load
     // https://www.amcharts.com/docs/v5/concepts/animations/
     chart.appear(2000, 200);
-  }, []);
+  }, [left, right]);
 
   return (
     <div className="stacked-bar-chart" id="stacked-bar-chart" style={{ width: "1000px", height: "300px", margin: "20px auto" }}></div>

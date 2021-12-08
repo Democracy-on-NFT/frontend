@@ -18,10 +18,14 @@ const DeputyProfile = props => {
         return age;
     }
 
+    const uppercase = word => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    };
+
     const loadData = async () => {
         const result = await profileApi.getDeputiesById(9, data.id);
 
-        console.log(result)
+        // console.log(result)
 
         setDeputy(result);
     };
@@ -34,6 +38,9 @@ const DeputyProfile = props => {
         <div key={data.id}>
             <div className="deputy-profile-info">
                 <p>
+                    {deputy.room ? uppercase(deputy.room) : '-'}
+                </p>
+                <p>
                     {deputy.date_of_birth ? getAge(deputy.date_of_birth) : '-'}
                 </p>
                 <p>
@@ -43,7 +50,7 @@ const DeputyProfile = props => {
                     {deputy.parties && deputy.parties[1] ? deputy.parties[1].party.abbreviation : '-'}
                 </p>
                 <p>
-                    
+
                     {deputy.parties && deputy.parties[0] ? deputy.parties[0].party.abbreviation : '-'}
                 </p>
             </div>

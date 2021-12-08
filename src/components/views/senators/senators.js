@@ -12,12 +12,13 @@ const Senators = () => {
         data: []
     });
 
+    const [filterByParty, setFilterByParty] = useState();
+    const [filterByCounty, setFilterByCounty] = useState();
+    const [filterByPartyAndCounty, setFilterByPartyAndCounty] = useState();
     const [partyFilter, setPartyFilter] = useState([{}]);
     const [countyFilter, setCountyFilter] = useState({});
     const [openModal, setOpenModal] = useState(false);
     const [modalData, setModalData] = useState();
-
-
 
     const loadData = async () => {
         const { per, page, data } = usersState;
@@ -25,21 +26,8 @@ const Senators = () => {
 
         console.log(result);
 
-        setUserState({
-            data: result
-        });
+        setUserState(result);
     };
-
-    const dummyParties = [{
-        text: 'Partidul National Liberal',
-        value: 'pnl',
-        key: 'pnl'
-    },
-    {
-        text: 'Partidul Social Democrat',
-        value: 'psd',
-        key: 'psd'
-    }];
 
     const dummyCounties = [{
         text: 'Suceava',
@@ -53,13 +41,15 @@ const Senators = () => {
     }];
 
     const onChangePartyHandler = async (e) => {
-        // const filteredSenators = usersState.filter(party => {
-        //     return party.text === e.target.textContent;
-        // })
+        const filteredSenators = usersState.filter(user => {
+            return user.party.abbreviation === e.target.textContent;
+        })
 
-        // console.log(filteredSenators)
+        console.log(filteredSenators)
 
-        
+        setFilterByParty(filteredSenators);
+
+
         // setPartyFilter(filteredSenators[0]);
     }
 
@@ -68,7 +58,7 @@ const Senators = () => {
             return county.text === e.target.textContent;
         })
 
-        console.log(county)
+        // console.log(county)
 
         setCountyFilter(county[0]);
     }
@@ -76,10 +66,10 @@ const Senators = () => {
     const handleOnCardClick = async (e) => {
         const card = e.target.closest('.card');
 
-        const user = usersState.data[card.getAttribute('data-key')];
-        
+        const user = usersState[card.getAttribute('data-key')];
+
         const result = await profileApi.getDeputiesById(9, user.id);
-        
+
         setModalData(result);
         setOpenModal(true);
     }
@@ -120,18 +110,22 @@ const Senators = () => {
                 </div>
 
                 <div className="ui equal grid">
-                    {usersState.data ? usersState.data.map((data, index) => (
+                    {!filterByParty && !filterByCounty && usersState.length ? usersState.map((data, index) => (
+                        <ProfileCard key={index} id={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                    )) : null}
+
+                    {filterByParty && !filterByCounty && usersState.length ? filterByParty.map((data, index) => (
+                        <ProfileCard key={index} id={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                    )) : null}
+                    {!filterByParty && filterByCounty && usersState.length ? filterByCounty.map((data, index) => (
+                        <ProfileCard key={index} id={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                    )) : null}
+
+                    {filterByParty && filterByCounty && usersState.length ? filterByPartyAndCounty.map((data, index) => (
                         <ProfileCard key={index} id={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
                     )) : null}
                 </div>
-                {/* <button
-                className="btn btn-light btn-block mx-auto"
-                onClick={e => {
-                    loadData();
-                }}
-            >
-                Load More Users
-            </button> */}
+
                 <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
             </div>
         </>

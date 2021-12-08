@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton';
 
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
@@ -15,6 +15,8 @@ import * as profileApi from '../../../api/profile.api';
 const Compare = () => {
 
     const [usersState, setUserState] = useState([{}]);
+    const [leftUserStats, setLeftUserStats] = useState([]);
+    const [rightUserStats, setRightUserStats] = useState([]);
     const [isPartyTypeChecked, setIsPartyTypeChecked] = useState(false);
     const [isDeputyTypeChecked, setIsDeputyTypeChecked] = useState(true);
     const [leftDeputyInfo, setLeftDeputyInfo] = useState(null);
@@ -32,27 +34,6 @@ const Compare = () => {
             setIsPartyTypeChecked(true);
         }
     };
-
-    const dummyDeputies = [{
-        name: 'Florin Citu',
-        id: 1,
-        age: 40,
-        previousParty: 'PNL',
-        currentParty: 'PNL ',
-        talks: 10,
-        county: 'Ilfov',
-        proposals: ['asdasd', 'qqqw1', 'asd123', 'afffff']
-    },
-    {
-        name: 'Marcel Ciolacu',
-        id: 2,
-        age: 52,
-        previousParty: '-',
-        currentParty: 'PSD',
-        talks: 30,
-        county: 'Tulcea',
-        proposals: ['aaaaa', 'bbbbb', 'ccccc', 'ddddd']
-    }];
 
     const dummyParties = [{
         id: 1,
@@ -75,29 +56,41 @@ const Compare = () => {
         ministers: 11
     }];
 
-    dummyDeputies.map(deputy => {
-        deputy.text = deputy.name;
-        deputy.value = deputy.id;
-    });
-
     dummyParties.map(party => {
         party.text = party.abbreviation;
         party.value = party.id;
     });
 
-    const onChangeDeputyHandler = (e, position) => {
+    const getDeputyById = async (id) => {
+        const result = await profileApi.getDeputiesById(9, id);
 
+        return result;
+    };
+
+    const onChangeDeputyHandler = async (e, position) => {
         if (e) {
             switch (position) {
                 case 'left':
                     const leftDeputy = usersState.filter(deputy => {
                         return deputy.text === e.target.textContent;
-                    })
-                    console.log(leftDeputy[0])
+                    });
                     setLeftDeputyInfo(leftDeputy[0]);
+                    // console.log('^^^^^^^^^^^^^^^^^^',leftDeputy[0]);
+                    const result = await getDeputyById(leftDeputy[0].id);
+
+                    console.log(result)
+
+                    // setDeputy(result);
+                    setLeftUserStats([
+                        result.activities[0].draft_decisions,
+                        result.activities[0].legislative_initiatives,
+                        result.activities[0].questions,
+                        result.activities[0].signed_motions,
+                        result.activities[0].speeches
+                    ])
                     break;
                 case 'right':
-                    const rightDeputy = dummyDeputies.filter(deputy => {
+                    const rightDeputy = usersState.filter(deputy => {
                         return deputy.text === e.target.textContent;
                     })
                     setRightDeputyInfo(rightDeputy[0]);
@@ -115,7 +108,7 @@ const Compare = () => {
                     const leftParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
                     })
-                    
+
                     setLeftPartyInfo(leftParty[0]);
                     break;
                 case 'right':
@@ -138,11 +131,10 @@ const Compare = () => {
             deputy.value = deputy.id;
         });
 
-        console.log(result)
+        // console.log(result)
 
         setUserState(result);
     };
-
 
     useEffect(() => {
         loadData();
@@ -182,22 +174,27 @@ const Compare = () => {
                                     selection
                                     search
                                     options={usersState}
-                                    placeholder="Alege deputat"
-                                    // onSelectChange={option => onChangeDeputyHandler(option)}
-                                onChange={(option) => onChangeDeputyHandler(option, 'left')} 
-                                // value={partyFilter.value}
+                                    placeholder="Alege parlamentar"
+                                    onChange={(option) => onChangeDeputyHandler(option, 'left')}
                                 />
+                                {/* <img src={leftDeputyInfo ? leftDeputyInfo.image_link : ''} /> */}
                             </div>
 
                             <div className="data-panel">
+                                {leftDeputyInfo ? <img src={leftDeputyInfo.image_link} /> :
+                                    <Skeleton height="100" />}
                                 <h1>Informații</h1>
-
+                                {rightDeputyInfo ? <img src={rightDeputyInfo.image_link} /> :
+                                    <Skeleton width="100" height="150" />}
                             </div>
                             <div className="deputy-panel">
                                 <Select
-                                    options={dummyDeputies}
-                                    placeholder="Alege deputat"
+                                    selection
+                                    search
+                                    options={usersState}
+                                    placeholder="Alege parlamentar"
                                     onChange={(option) => onChangeDeputyHandler(option, 'right')} />
+                                {/* <img src={rightDeputyInfo ? rightDeputyInfo.image_link : ''} /> */}
                             </div>
                         </div>
 
@@ -213,6 +210,9 @@ const Compare = () => {
 
                             <Container fluid className="compare-informations-label">
                                 <div>
+                                    <p>
+                                        Poziția
+                                    </p>
                                     <p>
                                         Vârsta
                                     </p>
@@ -311,7 +311,7 @@ const Compare = () => {
                     </>
                 )}
 
-                <StackedChart left={[1, 2, 1]} right={[3, 2, 1]} />
+                <StackedChart left={leftUserStats} right={[]} />
 
             </Container>
         </>
