@@ -5,8 +5,23 @@
   width: 100%;
 
   #world-map-text {
+    font-size: 20px;
+    font-weight: bold;
     position: absolute;
+    width: 150px;
+    height: 65px;
+    background: #c9cfd3;
+    fill: #bcc5cc;
+    border-radius: 10px;
+    border: 1px solid #bcc5cc;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.4));
+    pointer-events: none;
     display: none;
+
+    p {
+      margin: 2px 0 2px 10px;
+    }
   }
 
   .item span {

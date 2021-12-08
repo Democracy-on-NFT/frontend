@@ -87,7 +87,7 @@ const Deputies = () => {
                         <Select
                             selection
                             options={partyFilter}
-                            placeholder="Select party"
+                            placeholder="După partid"
                             onChange={onChangePartyHandler}
                         />
                     </div>
@@ -96,7 +96,7 @@ const Deputies = () => {
                         <Select
                             selection
                             options={countyFilter}
-                            placeholder="Select county"
+                            placeholder="După județ"
                             onChange={onChangecountyHandler}
                         />
                     </div>

@@ -52,7 +52,8 @@ const Dashboard = props => {
               </Menu>
               <img src={worldMap} onMouseOver={handleImageOver} onMouseLeave={handleImageLeave} />
               <div id="world-map-text">
-                <p>Diaspora: 35</p>
+                <p>Deputați: {total ? total.diaspora.deputati : 0 }</p>
+                <p>Senatori: {total ? total.diaspora.senatori : 0 }</p>
               </div>
             </Grid.Column>
             <Grid.Column textAlign='center'>
@@ -60,13 +61,13 @@ const Dashboard = props => {
                 <Menu.Item className='header'>Total: {total ? total.diaspora.deputati
                   + total.diaspora.senatori
                   + total.romania.deputati
-                  + total.romania.senatori : null}</Menu.Item>
+                  + total.romania.senatori : 0}</Menu.Item>
                 <Menu.Item>
-                  <span>România: {total ? total.romania.deputati + total.romania.senatori : null}</span>
-                  | <span>Diaspora: {total ? total.diaspora.deputati + total.diaspora.senatori : null}</span>
+                  <span>România: {total ? total.romania.deputati + total.romania.senatori : 0}</span>
+                  | <span>Diaspora: {total ? total.diaspora.deputati + total.diaspora.senatori : 0}</span>
                 </Menu.Item>
-                <Menu.Item>Deputați: {total ? total.romania.deputati + total.diaspora.deputati : null}</Menu.Item>
-                <Menu.Item>Senatori: {total ? total.romania.senatori + total.diaspora.senatori : null}</Menu.Item>
+                <Menu.Item>Deputați: {total ? total.romania.deputati + total.diaspora.deputati : 0}</Menu.Item>
+                <Menu.Item>Senatori: {total ? total.romania.senatori + total.diaspora.senatori : 0}</Menu.Item>
 
               </Menu>
             </Grid.Column>
