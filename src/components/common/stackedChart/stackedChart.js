@@ -78,10 +78,6 @@ const StackedChart = (props) => {
           categoryYField: 'title',
           sequencedInterpolation: true,
           clustered: false,
-          // tooltip: am5.Tooltip.new(root, {
-          //   pointerOrientation: pointerOrientation,
-          //   labelText: '{categoryY}: {valueX}'
-          // }),
         })
       );
 

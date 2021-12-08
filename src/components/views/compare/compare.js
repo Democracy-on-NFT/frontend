@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
 import Skeleton from 'react-loading-skeleton';
-
+import * as am5 from '@amcharts/amcharts5';
+import * as am5xy from '@amcharts/amcharts5/xy';
+import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
@@ -23,6 +25,7 @@ const Compare = () => {
     const [rightDeputyInfo, setRightDeputyInfo] = useState(null);
     const [leftPartyInfo, setLeftPartyInfo] = useState(null);
     const [rightPartyInfo, setRightPartyInfo] = useState(null);
+    const [root, setRoot] = useState(null);
 
 
     const onCompareTypeChange = (type) => {
@@ -138,6 +141,10 @@ const Compare = () => {
 
     useEffect(() => {
         loadData();
+        const el = document.getElementById('stacked-bar-chart');
+        el.innerHTML = "";
+        const root = am5.Root.new(el);
+        setRoot(root);
     }, []);
 
     return (
