@@ -51,7 +51,7 @@ let App = props => {
             </SidebarContent>
             <SidebarFooter>
               <Newsletter />
-              <p>Sursa: <a href="http://www.parlament.ro/" target="_blank">parlament.ro/</a></p>
+              <p>Sursa: <a href="http://www.parlament.ro" target="_blank">parlament.ro</a></p>
             </SidebarFooter>
           </ProSidebar>
 

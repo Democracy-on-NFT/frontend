@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Grid, Menu, Select } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
 
 import MapChart from '../../common/mapChart/mapChart';
 import * as profileApi from '../../../api/profile.api';
@@ -10,13 +11,10 @@ import worldMap from '../../../assets/world-map.jpg';
 const Dashboard = props => {
   const [total, setTotal] = useState();
   const [countiesData, setCountiesData] = useState([{}]);
+  const history = useHistory();
   const data = [{
-    id: 1,
-    text: '2018 - 2020',
-    value: 1
-  }, {
     id: 2,
-    text: '2020 - 2022',
+    text: '2020 - 2024',
     value: 2
   }];
 
@@ -26,6 +24,10 @@ const Dashboard = props => {
 
   const handleImageLeave = () => {
     document.getElementById('world-map-text').style.display = 'none';
+  }
+
+  const handleImageClick = () => {
+    history.push(`/judet/43`);
   }
 
   const loadData = async () => {
@@ -50,10 +52,13 @@ const Dashboard = props => {
               <Menu fluid vertical>
                 <Menu.Item className='header'>Listă parlamentari</Menu.Item>
               </Menu>
-              <img src={worldMap} onMouseOver={handleImageOver} onMouseLeave={handleImageLeave} />
+              <img src={worldMap}
+                onMouseOver={handleImageOver}
+                onMouseLeave={handleImageLeave}
+                onClick={handleImageClick} />
               <div id="world-map-text">
-                <p>Deputați: {total ? total.diaspora.deputati : 0 }</p>
-                <p>Senatori: {total ? total.diaspora.senatori : 0 }</p>
+                <p>Deputați: {total ? total.diaspora.deputati : 0}</p>
+                <p>Senatori: {total ? total.diaspora.senatori : 0}</p>
               </div>
             </Grid.Column>
             <Grid.Column textAlign='center'>
@@ -74,7 +79,7 @@ const Dashboard = props => {
             <Grid.Column textAlign='right' className="aligned">
               <Menu fluid vertical>
                 <Menu.Item className='header'>
-                  Mandate <Select options={data} />
+                  Mandate <Select options={data} defaultValue={data[data.length - 1].value} />
                 </Menu.Item>
               </Menu>
             </Grid.Column>
