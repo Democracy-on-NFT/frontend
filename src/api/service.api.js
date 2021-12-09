@@ -1,11 +1,6 @@
 import axios from 'axios';
 
-const host = 'http://localhost:3001/api/v1';
-
-export const getProfile = async (per, page) => {
-    const { data } = await axios.get(`https://randomuser.me/api/?nat=us&results=${per}&page=${page}`);
-    return data;
-}
+const host = 'http://51.116.232.61:3001/api/v1';
 
 export const getCounties = async () => {
     const { data } = await axios.get(`${host}/electoral_circumscriptions`);
@@ -60,4 +55,18 @@ export const postNotifications = async (data) => {
         "notification": data
     });
     return response;
+}
+
+export const getPartiesPerCounty = async (legislature_id, deputies) => {
+    const data = {
+        legislature_id,
+        'deputies_ids[]': 1,
+        'deputies_ids[]': 2
+    }
+    const { result } = await axios.get(`${host}/parties_percentage/activity`, {
+        params: data
+    });
+
+    console.log(result);
+    return result;
 }

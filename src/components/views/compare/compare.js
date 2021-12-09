@@ -3,14 +3,14 @@ import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
 import Skeleton from 'react-loading-skeleton';
 import * as am5 from '@amcharts/amcharts5';
+
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 import PartyProfile from "../../common/partyProfile/partyProfile";
 import StackedChart from "../../common/stackedChart/stackedChart";
 
-
-import * as profileApi from '../../../api/profile.api';
+import * as service from '../../../api/service.api';
 
 const Compare = () => {
     const [parliamentarians, setParliamentarians] = useState([{}]);
@@ -104,7 +104,7 @@ const Compare = () => {
     });
 
     const getDeputyById = async (id) => {
-        const result = await profileApi.getDeputiesById(9, id);
+        const result = await service.getDeputiesById(9, id);
 
         return result;
     };
@@ -201,7 +201,7 @@ const Compare = () => {
     }
 
     const loadData = async () => {
-        const result = await profileApi.getDeputies();
+        const result = await service.getDeputies();
 
         result.map(deputy => {
             deputy.text = deputy.name;

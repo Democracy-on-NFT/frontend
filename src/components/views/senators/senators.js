@@ -4,7 +4,7 @@ import { Select, Button, Grid, Icon, Pagination } from "semantic-ui-react";
 import ProfileCard from "../../common/profileCard/profileCard";
 import ModalCard from "../../common/modalCard/modalCard";
 
-import * as profileApi from '../../../api/profile.api';
+import * as service from '../../../api/service.api';
 
 const Senators = () => {
     const senatorsPerPage = 10;
@@ -41,7 +41,7 @@ const Senators = () => {
         const user = senators.filter(senator => {
             return senator.id == card.getAttribute('data-key');
         });
-        const senator = await profileApi.getDeputiesById(9, user[0].id);
+        const senator = await service.getDeputiesById(9, user[0].id);
 
         setModalData(senator);
         setOpenModal(true);
@@ -99,9 +99,9 @@ const Senators = () => {
     }
 
     const loadData = async () => {
-        const members = await profileApi.getDeputies();
-        const parties = await profileApi.getParties();
-        const counties = await profileApi.getCounties();
+        const members = await service.getDeputies();
+        const parties = await service.getParties();
+        const counties = await service.getCounties();
 
         const senators = members.filter(member => {
             return member.room == 'senator';

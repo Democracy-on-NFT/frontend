@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Header, Modal, Select, Button, Input } from "semantic-ui-react";
 import { Icon } from 'semantic-ui-react'
 
-import countiesName from '../../utils/countiesName.json';
 import sendEmail from '../../../assets/email_sent.gif';
 
-import * as profileApi from '../../../api/profile.api';
+import * as service from '../../../api/service.api';
 
 const Newsletter = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -32,7 +31,7 @@ const Newsletter = () => {
     const sentNewsletter = async () => {
         if (email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
             setError(false);
-            const result = await profileApi.postNotifications({
+            const result = await service.postNotifications({
                 email: email,
                 electoral_circumscription_id: selectedCounty.id
             });
@@ -54,7 +53,7 @@ const Newsletter = () => {
     }
 
     const loadData = async () => {
-        const counties = await profileApi.getCounties();
+        const counties = await service.getCounties();
 
         counties.map(county => {
             county.text = county.county_name;
