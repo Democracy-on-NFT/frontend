@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: front-app
+    image: front-app
+    build: .
+    volumes:
+      - .:/frontend
+    ports:
+      - '3000:3001'
