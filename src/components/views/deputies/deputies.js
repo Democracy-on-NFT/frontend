@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Select } from "semantic-ui-react";
+import { Select, Button, Grid, Icon, Pagination } from "semantic-ui-react";
 
 import ProfileCard from "../../common/profileCard/profileCard";
 import ModalCard from "../../common/modalCard/modalCard";
@@ -7,25 +7,38 @@ import ModalCard from "../../common/modalCard/modalCard";
 import * as profileApi from '../../../api/profile.api';
 
 const Deputies = () => {
-    const [deputies, setDeputies] = useState();
+    const senatorsPerPage = 10;
+    let pageNumber = 1
+
+    const [senators, setSenators] = useState();
+    const [filteredSenators, setFilteredSenators] = useState();
     const [filterByParty, setFilterByParty] = useState();
     const [filterByCounty, setFilterByCounty] = useState();
     const [partyFilter, setPartyFilter] = useState([{}]);
     const [countyFilter, setCountyFilter] = useState([{}]);
+    const [selectedParty, setSelectedParty] = useState();
+    const [selectedCounty, setSelectedCounty] = useState();
+    const [totalPages, setTotalPages] = useState(1)
     const [openModal, setOpenModal] = useState(false);
     const [modalData, setModalData] = useState();
 
-    const onChangePartyHandler = async (e) => {
+    const onChangePartyHandler = (e, { value }) => {
         setFilterByParty(e.target.textContent);
+        setSelectedParty(value);
+
+        filterUsers('', 1, e.target.textContent, filterByCounty);
     }
 
-    const onChangecountyHandler = (e) => {
+    const onChangeCountyHandler = (e, { value }) => {
         setFilterByCounty(e.target.textContent);
+        setSelectedCounty(value);
+
+        filterUsers('', 1, filterByParty, e.target.textContent);
     }
 
     const handleOnCardClick = async (e) => {
         const card = e.target.closest('.card');
-        const user = deputies.filter(senator => {
+        const user = senators.filter(senator => {
             return senator.id == card.getAttribute('data-key');
         });
         const senator = await profileApi.getDeputiesById(9, user[0].id);
@@ -34,8 +47,36 @@ const Deputies = () => {
         setOpenModal(true);
     }
 
-    const filterUsers = (users) => {
-        let filteredUsers = users;
+    const handleResetClick = type => {
+        switch (type) {
+            case 'party':
+                setFilterByParty();
+                setSelectedParty(null);
+                filterUsers('', 1, null, filterByCounty);
+                break;
+            case 'county':
+                setFilterByCounty();
+                setSelectedCounty(null);
+                filterUsers('', 1, filterByParty, null);
+                break;
+            default:
+                break;
+        }
+
+        // filterUsers();
+    }
+
+    const handlePageChange = (e, { activePage }) => {
+        pageNumber = activePage;
+        filterUsers('', activePage, filterByParty, filterByCounty);
+    }
+
+    const filterUsers = (users, page, filterByParty, filterByCounty) => {
+        let filteredUsers = senators || users;
+
+        if (!filteredUsers)
+            return;
+
         if (filterByParty) {
             filteredUsers = filteredUsers.filter(user => {
                 return filterByParty === user.party.abbreviation
@@ -47,8 +88,14 @@ const Deputies = () => {
                 return filterByCounty === user.circumscription.county_name
             })
         }
+        if (filteredUsers.length > senatorsPerPage) {
+            setTotalPages(Math.ceil(filteredUsers.length / senatorsPerPage));
+            filteredUsers = filteredUsers.slice(((page || pageNumber) - 1) * senatorsPerPage, ((page || pageNumber) - 1) * senatorsPerPage + senatorsPerPage);
+        } else {
+            setTotalPages(1);
+        }
 
-        return filteredUsers;
+        setFilteredSenators(filteredUsers);
     }
 
     const loadData = async () => {
@@ -56,7 +103,7 @@ const Deputies = () => {
         const parties = await profileApi.getParties();
         const counties = await profileApi.getCounties();
 
-        const deputies = members.filter(member => {
+        const senators = members.filter(member => {
             return member.room == 'deputat';
         })
 
@@ -69,9 +116,12 @@ const Deputies = () => {
             county.value = county.id;
         });
 
-        setDeputies(deputies);
+        setSenators(senators);
         setPartyFilter(parties);
         setCountyFilter(counties);
+        setTotalPages(Math.ceil(senators.length / senatorsPerPage));
+
+        filterUsers(senators, 1, null, null);
     };
 
     useEffect(() => {
@@ -86,29 +136,50 @@ const Deputies = () => {
                     <div>
                         <Select
                             selection
+                            search
                             options={partyFilter}
                             placeholder="După partid"
                             onChange={onChangePartyHandler}
+                            value={selectedParty}
                         />
+                        <Button onClick={() => handleResetClick('party')} icon>
+                            <Icon name='undo alternate' />
+                        </Button>
                     </div>
 
                     <div>
                         <Select
                             selection
+                            search
                             options={countyFilter}
                             placeholder="După județ"
-                            onChange={onChangecountyHandler}
+                            onChange={onChangeCountyHandler}
+                            value={selectedCounty}
                         />
+                        <Button onClick={() => handleResetClick('county')} icon>
+                            <Icon name='undo alternate' />
+                        </Button>
                     </div>
                 </div>
 
-                <div className="ui equal grid">
-                    {deputies ? filterUsers(deputies).map((user) => (
-                        <ProfileCard key={user.id} id={user.id} data={user} handleOnCardClick={handleOnCardClick} />
-                    )) : null}
-                </div>
+                <Grid>
+                    <Grid.Row columns={5}>
+                        {filteredSenators ? filteredSenators.map((user) => (
+                            <ProfileCard key={user.id} id={user.id} data={user} handleOnCardClick={handleOnCardClick} />
+                        )) : null}
+                    </Grid.Row>
+                </Grid>
 
-                <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
+                <Pagination
+                    siblingRange={2}
+                    onPageChange={handlePageChange}
+                    defaultActivePage={1}
+                    totalPages={totalPages} />
+
+                <ModalCard
+                    openModal={openModal}
+                    setOpenModal={setOpenModal}
+                    modalData={modalData} />
             </div>
         </>
     );

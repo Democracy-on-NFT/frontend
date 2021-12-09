@@ -1,8 +1,12 @@
+import React from "react";
+import { Grid } from "semantic-ui-react";
+
 const ProfileCard = props => {
     const { data, handleOnCardClick } = props;
 
     return (
-        <div className="four wide column">
+        <Grid.Column>
+
             <div className="card" key={data.id} data-key={data.id} onClick={handleOnCardClick}>
                 <div className="card-body">
                     <div className="avatar">
@@ -23,7 +27,7 @@ const ProfileCard = props => {
                     </p>
                 </div>
             </div>
-        </div>
+        </Grid.Column>
     )
 }
 

@@ -16,12 +16,8 @@ const County = () => {
     const { id } = useParams();
 
     const data = [{
-        id: 1,
-        text: '2018 - 2020',
-        value: 1
-    }, {
         id: 2,
-        text: '2020 - 2022',
+        text: '2020 - 2024',
         value: 2
     }];
 
@@ -95,11 +91,13 @@ const County = () => {
                 </Grid>
 
                 <div className="profiles-container">
-                    <div className="ui equal grid">
-                        {parliamentarians ? parliamentarians.map((data, index) => (
-                            <ProfileCard key={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
-                        )) : null}
-                    </div>
+                    <Grid>
+                        <Grid.Row columns={5}>
+                            {parliamentarians ? parliamentarians.map((data, index) => (
+                                <ProfileCard key={index} data={data} index={index} handleOnCardClick={handleOnCardClick} />
+                            )) : null}
+                        </Grid.Row>
+                    </Grid>
                 </div>
                 <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
 
