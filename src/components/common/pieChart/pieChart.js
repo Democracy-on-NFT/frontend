@@ -4,8 +4,10 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
 const PieChart = props => {
+    const { data, id } = props;
+
     useEffect(() => {
-        const root = am5.Root.new("pie-chart");
+        const root = am5.Root.new(id);
 
         root.setThemes([
             am5themes_Animated.new(root)
@@ -25,7 +27,7 @@ const PieChart = props => {
                 categoryField: "party"
             })
         );
-        series.data.setAll(props.data);
+        series.data.setAll(data);
 
         // Add legend
         const legend = chart.children.push(am5.Legend.new(root, {
@@ -75,7 +77,7 @@ const PieChart = props => {
         chart.appear(2000, 200);
     }, []);
     return (
-        <div className="pie-chart" id="pie-chart" style={{ width: "1000px", height: "300px", margin: "20px auto" }}></div>
+        <div className="pie-chart" id={id} style={{ width: "500px", height: "200px", margin: "20px auto" }}></div>
     )
 }
 

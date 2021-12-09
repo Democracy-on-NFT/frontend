@@ -4,9 +4,15 @@
   margin: 0 auto;
   padding: 20px;
 
-  .pie-chart {
-    canvas:last-of-type {
-      display: none;
+  .pie-charts-list {
+    .column {
+      text-align: center;
+      font-weight: bold;
+    }
+    .pie-chart {
+      canvas:last-of-type {
+        display: none;
+      }
     }
   }
 }

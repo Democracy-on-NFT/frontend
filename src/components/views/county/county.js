@@ -6,7 +6,7 @@ import PieChart from '../../common/pieChart/pieChart';
 import ProfileCard from "../../common/profileCard/profileCard";
 import ModalCard from "../../common/modalCard/modalCard";
 
-import * as profileApi from '../../../api/profile.api';
+import * as service from '../../../api/service.api';
 
 const County = () => {
     const [parliamentarians, setParliamentarians] = useState([{}]);
@@ -21,39 +21,52 @@ const County = () => {
         value: 2
     }];
 
-    const pieData = [{
-        party: "PNL",
-        sales: 3
-    }, {
-        party: "PSD",
-        sales: 2
-    }, {
-        party: "USR",
-        sales: 1
-    }, {
-        party: "AUR",
-        sales: 1
-    }];
+    const generateRandomData = () => {
+        const data = [{
+            party: "PNL",
+            sales: Math.floor(Math.random() * 10)
+        }, {
+            party: "PSD",
+            sales: Math.floor(Math.random() * 10)
+        }, {
+            party: "USR",
+            sales: Math.floor(Math.random() * 10)
+        }, {
+            party: "AUR",
+            sales: Math.floor(Math.random() * 10)
+        }];
+
+        return data;
+    }
 
     const handleOnCardClick = async (e) => {
         const card = e.target.closest('.card');
         const user = parliamentarians.filter(parliamentar => {
             return parliamentar.id == card.getAttribute('data-key');
         });
-        const senator = await profileApi.getDeputiesById(9, user[0].id);
+        const senator = await service.getDeputiesById(9, user[0].id);
 
         setModalData(senator);
         setOpenModal(true);
     }
 
     const loadData = async () => {
-        const result = await profileApi.getDeputies();
-        const counties = await profileApi.getDeputiesByCounty(9);
+        let data = [], parties = [];
+        const result = await service.getDeputies();
+        const counties = await service.getDeputiesByCounty(9);
 
         const countyId = id.replace('ro_', '');
         const countyParliamentarians = result.filter(county => {
             return county.circumscription.number == countyId;
         });
+
+        countyParliamentarians.map(parlam => {
+            data.push(parlam.id);
+            if (parties.indexOf(parlam.party.abbreviation) == -1)
+                parties.push(parlam.party.abbreviation);
+        })
+        // const parties = await service.getPartiesPerCounty(9, data);
+        console.log(parties);
 
         setCounty(counties[countyId]);
         setParliamentarians(countyParliamentarians);
@@ -90,6 +103,31 @@ const County = () => {
                     </Grid.Row>
                 </Grid>
 
+                <Grid columns='equal' className="pie-charts-list">
+                    <Grid.Row columns={3}>
+                        <Grid.Column>
+                            Proiecte de hotărâri
+                            <PieChart data={generateRandomData()} id='pie-chart-1' />
+                        </Grid.Column>
+                        <Grid.Column>
+                            Inițiative legislative
+                            <PieChart data={generateRandomData()} id='pie-chart-2' />
+                        </Grid.Column>
+                        <Grid.Column>
+                            Întrebări
+                            <PieChart data={generateRandomData()} id='pie-chart-3' />
+                        </Grid.Column>
+                        <Grid.Column>
+                            Moțiuni semnate
+                            <PieChart data={generateRandomData()} id='pie-chart-4' />
+                        </Grid.Column>
+                        <Grid.Column>
+                            Discursuri
+                            <PieChart data={generateRandomData()} id='pie-chart-5' />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+
                 <div className="profiles-container">
                     <Grid>
                         <Grid.Row columns={5}>
@@ -100,8 +138,6 @@ const County = () => {
                     </Grid>
                 </div>
                 <ModalCard openModal={openModal} setOpenModal={setOpenModal} modalData={modalData} />
-
-                <PieChart data={pieData} />
             </div>
         </>
     );

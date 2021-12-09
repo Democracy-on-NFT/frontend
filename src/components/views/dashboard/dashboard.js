@@ -4,7 +4,7 @@ import { Grid, Menu, Select } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 
 import MapChart from '../../common/mapChart/mapChart';
-import * as profileApi from '../../../api/profile.api';
+import * as service from '../../../api/service.api';
 
 import worldMap from '../../../assets/world-map.jpg';
 
@@ -31,8 +31,8 @@ const Dashboard = props => {
   }
 
   const loadData = async () => {
-    const result = await profileApi.getDeputiesByCommunity(9);
-    const counties = await profileApi.getDeputiesByCounty(9);
+    const result = await service.getDeputiesByCommunity(9);
+    const counties = await service.getDeputiesByCounty(9);
 
     setTotal(result);
 
