@@ -212,7 +212,7 @@ const Compare = () => {
     };
 
     useEffect(() => {
-        rerenderStackedCHart()
+        rerenderStackedCHart();
     }, [leftUserStats, rightUserStats]);
 
     useEffect(() => {
@@ -229,7 +229,7 @@ const Compare = () => {
                 <div className="compare-types">
                     <CustomCheckbox
                         isChecked={isDeputyTypeChecked}
-                        label={'deputați'}
+                        label={'parlamentari'}
                         size={1}
                         onChangeState={() => {
                             onCompareTypeChange('deputies');
@@ -238,7 +238,7 @@ const Compare = () => {
 
                     <CustomCheckbox
                         isChecked={isPartyTypeChecked}
-                        label={'partid politic'}
+                        label={'partide politice'}
                         size={1}
                         onChangeState={() => {
                             onCompareTypeChange('political party');

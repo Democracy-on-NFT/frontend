@@ -30,6 +30,11 @@
 
     .card-body {
       text-align: center;
+      .card-text {
+        a {
+          word-wrap: break-word;
+        }
+      }
     }
 
     .avatar img {

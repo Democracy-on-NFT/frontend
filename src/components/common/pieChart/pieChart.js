@@ -4,7 +4,7 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 
 const PieChart = props => {
-    const { data, id } = props;
+    const { data, id, width, height } = props;
 
     useEffect(() => {
         const root = am5.Root.new(id);
@@ -77,7 +77,7 @@ const PieChart = props => {
         chart.appear(2000, 200);
     }, []);
     return (
-        <div className="pie-chart" id={id} style={{ width: "500px", height: "200px", margin: "20px auto" }}></div>
+        <div className="pie-chart" id={id} style={{ width: width || "500px", height: height || "200px", margin: "20px auto" }}></div>
     )
 }
 
