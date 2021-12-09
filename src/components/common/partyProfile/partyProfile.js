@@ -4,29 +4,26 @@ const PartyProfile = props => {
     const { data } = props;
 
     return (
-        <div key={data.id}>
+        <div className="party-profile" key={data.id}>
             <h1>
                 {data.name}
             </h1>
 
             <div className="party-profile-info">
                 <p>
-                    {data.abbreviation}
+                    {data.abbreviation || '-'}
                 </p>
                 <p>
-                    {data.totalMembers}
+                    {data.president || '-'}
                 </p>
                 <p>
-                    {data.president}
+                    {data.senators || '-'}
                 </p>
                 <p>
-                    {data.secretaryGeneral}
+                    {data.deputati || '-'}
                 </p>
                 <p>
-                    {data.firstVicePresident}
-                </p>
-                <p>
-                    {data.ministers}
+                    {data.ministers || '-'}
                 </p>
             </div>
         </div>
