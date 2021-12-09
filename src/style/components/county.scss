@@ -1,6 +1,12 @@
 .county-container {
-    max-width: 1500px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+
+  .pie-chart {
+    canvas:last-of-type {
+      display: none;
+    }
+  }
 }

@@ -2,6 +2,8 @@ import { Header, Image, Modal } from "semantic-ui-react";
 import Icon from '@mdi/react';
 import { mdiMapMarkerRadius, mdiEmail } from '@mdi/js';
 
+import MultipleDateAxes from '../multipleDateAxes/multipleDateAxes.js';
+
 const ModalCard = props => {
     const { modalData, openModal, setOpenModal } = props;
 
@@ -54,6 +56,8 @@ const ModalCard = props => {
                     </p>
                 </Modal.Description>
             </Modal.Content>
+
+            <MultipleDateAxes />
         </Modal>
     )
 }

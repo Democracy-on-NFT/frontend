@@ -53,6 +53,16 @@ body,
     width: 230px;
   }
 
+  .content {
+    padding: 1.5rem 1.5rem 0 1.5rem !important;
+  }
+
+  .multiple-date-axes {
+    canvas:last-of-type {
+      display: none;
+    }
+  }
+
   .description {
     p {
       display: flex;

@@ -37,21 +37,65 @@ const Compare = () => {
         id: 1,
         name: 'Partidul National Liberal',
         abbreviation: 'PNL',
-        totalMembers: 120,
-        president: 'Florin Citu',
-        secretaryGeneral: 'Dan Valceanu',
-        firstVicePresident: 'Rares Bogdan',
+        senators: 38,
+        deputies: 79,
+        president: 'FLORIN-VASILE CÎȚU',
         ministers: 13
     },
     {
         id: 2,
         name: 'Partidul Social Democrat',
         abbreviation: 'PSD',
-        totalMembers: 150,
+        senators: 47,
+        deputati: 110,
         president: 'Marcel Ciolacu',
-        secretaryGeneral: 'Paul Stanescu',
-        firstVicePresident: 'Gabriela Firea',
         ministers: 11
+    },
+    {
+        id: 3,
+        name: 'Grupul parlamentar al Uniunii Salvați România',
+        abbreviation: 'USR',
+        senators: 25,
+        deputati: 55,
+        president: 'DACIAN CIOLOȘ',
+        ministers: 0
+    },
+    {
+        id: 4,
+        name: '	Grupul parlamentar Alianța pentru Unirea Românilor',
+        abbreviation: 'AUR',
+        senators: 13,
+        deputati: 30,
+        president: 'George Simion',
+        ministers: 0
+    },
+    {
+        id: 5,
+        name: 'Grupul parlamentar al Uniunii Democrate Maghiare din România',
+        abbreviation: 'UDMR',
+        senators: 9,
+        deputati: 20,
+        president: 'Kelemen Hunor',
+        ministers: 0
+    },
+    {
+        id: 6,
+        name: 'Grupul parlamentar al minorităţilor naţionale',
+        abbreviation: 'MIN',
+        senators: 0,
+        deputati: 18,
+        president: 'Pambuccian Varujan',
+        ministers: 0
+    }
+        ,
+    {
+        id: 7,
+        name: 'Neafiliați',
+        abbreviation: 'NA',
+        senators: 4,
+        deputati: 18,
+        president: '',
+        ministers: 0
     }];
 
     dummyParties.map(party => {
@@ -111,15 +155,29 @@ const Compare = () => {
                     const leftParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
                     });
-
                     setLeftPartyInfo(leftParty[0]);
+
+                    setLeftUserStats([
+                        Math.floor(Math.random() * 100) + 50,
+                        Math.floor(Math.random() * 300) + 200,
+                        Math.floor(Math.random() * 500) + 200,
+                        Math.floor(Math.random() * 10),
+                        Math.floor(Math.random() * 450) + 100,
+                    ]);
                     break;
                 case 'right':
                     const rightParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
                     });
-
                     setRightPartyInfo(rightParty[0]);
+
+                    setRightUserStats([
+                        Math.floor(Math.random() * 100) + 50,
+                        Math.floor(Math.random() * 300) + 200,
+                        Math.floor(Math.random() * 500) + 200,
+                        Math.floor(Math.random() * 10),
+                        Math.floor(Math.random() * 450) + 100,
+                    ]);
                     break;
                 default:
                     break;
@@ -292,7 +350,7 @@ const Compare = () => {
                                 </>}
                             </Container>
 
-                            <Container fluid className="compare-informations-label">
+                            <Container fluid className="compare-informations-label party-profile">
                                 <h1>
                                     <p>
                                         Numele
@@ -302,16 +360,13 @@ const Compare = () => {
                                     Prescurtarea
                                 </p>
                                 <p>
-                                    Nr. membri
-                                </p>
-                                <p>
                                     Președinte
                                 </p>
                                 <p>
-                                    Vice președinte
+                                    Senatori
                                 </p>
                                 <p>
-                                    Secretar general
+                                    Deputați
                                 </p>
                                 <p>
                                     Miniștri
