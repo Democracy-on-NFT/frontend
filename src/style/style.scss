@@ -33,6 +33,7 @@ body,
     position: fixed;
 
     .pro-sidebar-footer {
+      padding: 0px 0 20px 10px;
       p {
         transition: opacity 0.2s, color 0.2s, transform 1s;
         cursor: pointer;
@@ -42,6 +43,49 @@ body,
             transform: scale(1.5);
           }
         }
+      }
+    }
+  }
+}
+
+.modal-profile {
+  .profile-pic img {
+    width: 230px;
+  }
+
+  .description {
+    p {
+      display: flex;
+      svg {
+        margin-right: 5px;
+      }
+
+      span {
+        margin-top: 3px;
+      }
+    }
+    .party-logo {
+      display: inline-grid;
+      img {
+        width: 100px;
+      }
+    }
+  }
+}
+.newsletter-modal {
+  .input {
+    margin-left: 50px;
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .actions {
+    span {
+      vertical-align: bottom;
+      img {
+        margin-left: 20px;
+        width: 163px;
+        height: 40px;
       }
     }
   }

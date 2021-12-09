@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createElement } from "react";
 import { Select } from 'semantic-ui-react';
 import { Container } from 'semantic-ui-react';
-import Skeleton from 'react-loading-skeleton'
-
+import Skeleton from 'react-loading-skeleton';
+import * as am5 from '@amcharts/amcharts5';
 import CustomCheckbox from "../../common/customCheckbox/customCheckbox";
 import ViewHeader from "../../common/viewHeader/viewHeader";
 import DeputyProfile from "../../common/deputyProfile/deputyProfile";
 import PartyProfile from "../../common/partyProfile/partyProfile";
 import StackedChart from "../../common/stackedChart/stackedChart";
 
-const Compare = () => {
 
+import * as profileApi from '../../../api/profile.api';
+
+const Compare = () => {
+    const [parliamentarians, setParliamentarians] = useState([{}]);
+    const [leftUserStats, setLeftUserStats] = useState([]);
+    const [rightUserStats, setRightUserStats] = useState([]);
     const [isPartyTypeChecked, setIsPartyTypeChecked] = useState(false);
     const [isDeputyTypeChecked, setIsDeputyTypeChecked] = useState(true);
     const [leftDeputyInfo, setLeftDeputyInfo] = useState(null);
     const [rightDeputyInfo, setRightDeputyInfo] = useState(null);
     const [leftPartyInfo, setLeftPartyInfo] = useState(null);
     const [rightPartyInfo, setRightPartyInfo] = useState(null);
-
 
     const onCompareTypeChange = (type) => {
         if (type === 'deputies') {
@@ -28,27 +32,6 @@ const Compare = () => {
             setIsPartyTypeChecked(true);
         }
     };
-
-    const dummyDeputies = [{
-        name: 'Florin Citu',
-        id: 1,
-        age: 40,
-        previousParty: 'PNL',
-        currentParty: 'PNL ',
-        talks: 10,
-        county: 'Ilfov',
-        proposals: ['asdasd', 'qqqw1', 'asd123', 'afffff']
-    },
-    {
-        name: 'Marcel Ciolacu',
-        id: 2,
-        age: 52,
-        previousParty: '-',
-        currentParty: 'PSD',
-        talks: 30,
-        county: 'Tulcea',
-        proposals: ['aaaaa', 'bbbbb', 'ccccc', 'ddddd']
-    }];
 
     const dummyParties = [{
         id: 1,
@@ -71,30 +54,49 @@ const Compare = () => {
         ministers: 11
     }];
 
-    dummyDeputies.map(deputy => {
-        deputy.text = deputy.name;
-        deputy.value = deputy.id;
-    });
-
     dummyParties.map(party => {
         party.text = party.abbreviation;
         party.value = party.id;
     });
 
-    const onChangeDeputyHandler = (e, position) => {
+    const getDeputyById = async (id) => {
+        const result = await profileApi.getDeputiesById(9, id);
+
+        return result;
+    };
+
+    const onChangeDeputyHandler = async (e, position) => {
         if (e) {
             switch (position) {
                 case 'left':
-                    const leftDeputy = dummyDeputies.filter(deputy => {
+                    const leftDeputy = parliamentarians.filter(deputy => {
                         return deputy.text === e.target.textContent;
-                    })
-                    setLeftDeputyInfo(leftDeputy[0]);
+                    });
+                    const leftResult = await getDeputyById(leftDeputy[0].id);
+
+                    setLeftDeputyInfo(leftResult);
+                    setLeftUserStats([
+                        leftResult.activities[0].draft_decisions,
+                        leftResult.activities[0].legislative_initiatives,
+                        leftResult.activities[0].questions,
+                        leftResult.activities[0].signed_motions,
+                        leftResult.activities[0].speeches
+                    ]);
                     break;
                 case 'right':
-                    const rightDeputy = dummyDeputies.filter(deputy => {
+                    const rightDeputy = parliamentarians.filter(deputy => {
                         return deputy.text === e.target.textContent;
                     })
-                    setRightDeputyInfo(rightDeputy[0]);
+                    const rightResult = await getDeputyById(rightDeputy[0].id);
+
+                    setRightDeputyInfo(rightResult);
+                    setRightUserStats([
+                        rightResult.activities[0].draft_decisions,
+                        rightResult.activities[0].legislative_initiatives,
+                        rightResult.activities[0].questions,
+                        rightResult.activities[0].signed_motions,
+                        rightResult.activities[0].speeches
+                    ]);
                     break;
                 default:
                     break;
@@ -108,13 +110,15 @@ const Compare = () => {
                 case 'left':
                     const leftParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
-                    })
+                    });
+
                     setLeftPartyInfo(leftParty[0]);
                     break;
                 case 'right':
                     const rightParty = dummyParties.filter(party => {
                         return party.text === e.target.textContent;
-                    })
+                    });
+
                     setRightPartyInfo(rightParty[0]);
                     break;
                 default:
@@ -122,6 +126,40 @@ const Compare = () => {
             }
         }
     };
+
+    const rerenderStackedCHart = () => {
+        if (document.getElementById('stacked-bar-chart'))
+            document.getElementById('stacked-bar-chart').remove();
+
+        const child = document.createElement('div');
+        const parent = document.querySelector('.compare-container');
+
+        child.id = 'stacked-bar-chart';
+        parent.append(child);
+
+        const root = am5.Root.new('stacked-bar-chart');
+
+        StackedChart({ left: leftUserStats, right: rightUserStats, root });
+    }
+
+    const loadData = async () => {
+        const result = await profileApi.getDeputies();
+
+        result.map(deputy => {
+            deputy.text = deputy.name;
+            deputy.value = deputy.id;
+        });
+
+        setParliamentarians(result);
+    };
+
+    useEffect(() => {
+        rerenderStackedCHart()
+    }, [leftUserStats, rightUserStats]);
+
+    useEffect(() => {
+        loadData();
+    }, []);
 
     return (
         <>
@@ -154,19 +192,27 @@ const Compare = () => {
                         <div className="select-to-compare-panel">
                             <div className="deputy-panel">
                                 <Select
-                                    options={dummyDeputies}
-                                    placeholder="Alege deputat"
-                                    onChange={(option) => onChangeDeputyHandler(option, 'left')} />
+                                    selection
+                                    search
+                                    options={parliamentarians}
+                                    placeholder="Alege parlamentar"
+                                    onChange={(option) => onChangeDeputyHandler(option, 'left')}
+                                />
                             </div>
 
                             <div className="data-panel">
+                                {leftDeputyInfo ? <img src={leftDeputyInfo.image_link} /> :
+                                    <Skeleton height="100" />}
                                 <h1>Informații</h1>
-
+                                {rightDeputyInfo ? <img src={rightDeputyInfo.image_link} /> :
+                                    <Skeleton width="100" height="150" />}
                             </div>
                             <div className="deputy-panel">
                                 <Select
-                                    options={dummyDeputies}
-                                    placeholder="Alege deputat"
+                                    selection
+                                    search
+                                    options={parliamentarians}
+                                    placeholder="Alege parlamentar"
                                     onChange={(option) => onChangeDeputyHandler(option, 'right')} />
                             </div>
                         </div>
@@ -182,12 +228,10 @@ const Compare = () => {
                             </Container>
 
                             <Container fluid className="compare-informations-label">
-                                <h1>
-                                    <p>
-                                        Nume
-                                    </p>
-                                </h1>
                                 <div>
+                                    <p>
+                                        Poziția
+                                    </p>
                                     <p>
                                         Vârsta
                                     </p>
@@ -195,10 +239,10 @@ const Compare = () => {
                                         Județ
                                     </p>
                                     <p>
-                                        Partid precedent
+                                        Partid curent
                                     </p>
                                     <p>
-                                        Partid curent
+                                        Partid precedent
                                     </p>
 
                                 </div>
@@ -285,9 +329,6 @@ const Compare = () => {
                         </div>
                     </>
                 )}
-
-                <StackedChart left={[1, 2, 1]} right={[3, 2, 1]} />
-
             </Container>
         </>
     )
