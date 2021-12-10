@@ -24,16 +24,16 @@ const County = () => {
     const generateRandomData = () => {
         const data = [{
             party: "PNL",
-            sales: Math.floor(Math.random() * 10)
+            activity: Math.floor(Math.random() * 10)
         }, {
             party: "PSD",
-            sales: Math.floor(Math.random() * 10)
+            activity: Math.floor(Math.random() * 10)
         }, {
             party: "USR",
-            sales: Math.floor(Math.random() * 10)
+            activity: Math.floor(Math.random() * 10)
         }, {
             party: "AUR",
-            sales: Math.floor(Math.random() * 10)
+            activity: Math.floor(Math.random() * 10)
         }];
 
         return data;
