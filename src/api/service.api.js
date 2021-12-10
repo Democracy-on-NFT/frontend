@@ -58,17 +58,11 @@ export const postNotifications = async (data) => {
 }
 
 export const getPartiesActivity = async (legislature_id, deputies) => {
-    const data = {
-        legislature_id,
-        'deputies_ids[]': 1,
-        'deputies_ids[]': 2
-    }
-    const { result } = await axios.get(`${host}/parties_percentage/activity`, {
+    const { data } = await axios.get(`${host}/parties_percentage/activity`, {
         params: {
-            legislature_id: 9
+            legislature_id
         }
     });
 
-    console.log(result);
-    return result;
+    return data;
 }

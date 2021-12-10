@@ -83,6 +83,7 @@ const Newsletter = () => {
                     <Modal.Description>
                         <Header>Primește lunar informații legate de reprezentanții județului tău</Header>
                         <Select
+                            search
                             options={counties}
                             placeholder="Alege județ"
                             onChange={onCountyChange}
